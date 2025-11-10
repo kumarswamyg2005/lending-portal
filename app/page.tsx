@@ -71,24 +71,46 @@ const executeTransaction = async (
         console.log("[v0] Transaction signed by MetaMask:", signature);
       } catch (signError: any) {
         console.error("[v0] MetaMask signing error:", signError);
+        console.error("[v0] Error details:", {
+          code: signError?.code,
+          message: signError?.message,
+          data: signError?.data,
+          stack: signError?.stack,
+        });
         setIsLoading(false);
 
-        // Handle user rejection
-        if (signError.code === 4001) {
+        // Extract error code and message
+        const errorCode = signError?.code || signError?.error?.code;
+        const errorMessage =
+          signError?.message ||
+          signError?.error?.message ||
+          JSON.stringify(signError);
+
+        // Handle user rejection (MetaMask code 4001)
+        if (errorCode === 4001 || errorCode === "ACTION_REJECTED") {
+          console.log("[v0] User rejected the transaction");
           alert("Transaction cancelled by user");
           return false;
-        } else if (signError.code === -32603) {
-          alert(
-            "Transaction rejected: " + (signError.message || "Unknown error")
-          );
-          return false;
-        } else {
-          alert(
-            "Failed to sign transaction: " +
-              (signError.message || "Unknown error")
-          );
+        }
+
+        // Handle internal errors
+        if (errorCode === -32603) {
+          console.log("[v0] Internal JSON-RPC error");
+          alert("Transaction rejected: " + errorMessage);
           return false;
         }
+
+        // Handle other MetaMask errors
+        if (errorMessage && errorMessage !== "{}") {
+          console.log("[v0] MetaMask error:", errorMessage);
+          alert("Failed to sign transaction: " + errorMessage);
+          return false;
+        }
+
+        // Generic error fallback
+        console.log("[v0] Unknown error during signing");
+        alert("Transaction cancelled or failed. Please try again.");
+        return false;
       }
     }
 
