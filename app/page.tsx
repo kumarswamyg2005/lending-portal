@@ -50,6 +50,8 @@ const executeTransaction = async (
     return false;
   }
 
+  setIsLoading(true);
+
   try {
     console.log(
       `[v0] Executing ${type} transaction: ${amount} ${token} at ${apy}% APY`
@@ -67,13 +69,31 @@ const executeTransaction = async (
           params: [message, account],
         });
         console.log("[v0] Transaction signed by MetaMask:", signature);
-      } catch (signError) {
-        console.log("[v0] MetaMask signing skipped, using simulated signature");
+      } catch (signError: any) {
+        console.error("[v0] MetaMask signing error:", signError);
+        setIsLoading(false);
+
+        // Handle user rejection
+        if (signError.code === 4001) {
+          alert("Transaction cancelled by user");
+          return false;
+        } else if (signError.code === -32603) {
+          alert(
+            "Transaction rejected: " + (signError.message || "Unknown error")
+          );
+          return false;
+        } else {
+          alert(
+            "Failed to sign transaction: " +
+              (signError.message || "Unknown error")
+          );
+          return false;
+        }
       }
     }
 
     // Simulate transaction processing
-    setIsLoading(true);
+    console.log("[v0] Processing transaction...");
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const txHash = "0x" + Math.random().toString(16).substr(2, 40);
@@ -103,12 +123,13 @@ const executeTransaction = async (
     setReputation(reputation + reputationGain);
 
     setIsLoading(false);
+    console.log("[v0] Transaction successful:", txHash);
     alert(`Transaction successful! Tx: ${txHash}`);
     return true;
   } catch (error: any) {
     setIsLoading(false);
     console.error("[v0] Transaction failed:", error);
-    alert("Transaction failed: " + error.message);
+    alert("Transaction failed: " + (error.message || "Unknown error"));
     return false;
   }
 };
