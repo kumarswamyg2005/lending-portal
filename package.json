@@ -2,11 +2,14 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "hardhat:node": "hardhat node",
+    "hardhat:deploy": "hardhat run scripts/deploy.ts --network localhost"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -79,6 +82,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@openzeppelin/contracts": "^5.4.0",
     "@tailwindcss/postcss": "^4.1.9",
     "@types/node": "^22",
     "@types/react": "^19",

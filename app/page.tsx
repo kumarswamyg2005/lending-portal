@@ -1,6 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {
+  depositTokens,
+  borrowTokens,
+  repayLoan,
+  executeFlashLoan,
+  mintTestTokens,
+} from "../lib/blockchain";
 
 // Types
 type Page =
@@ -43,7 +50,9 @@ const executeTransaction = async (
   setLoanHistory: any,
   loanHistory: any,
   setReputation: any,
-  reputation: any
+  reputation: any,
+  collateralToken?: string,
+  collateralAmount?: number
 ) => {
   if (!account) {
     alert("Please connect your MetaMask wallet first");
@@ -57,68 +66,48 @@ const executeTransaction = async (
       `[v0] Executing ${type} transaction: ${amount} ${token} at ${apy}% APY`
     );
 
-    const ethereum = (window as any).ethereum;
+    let txHash: string;
 
-    if (ethereum) {
-      // Try to sign with MetaMask
-      const message = `Lending Portal: ${type} ${amount} ${token} at ${apy}% APY`;
+    // Execute real blockchain transaction based on type
+    switch (type) {
+      case "supply":
+        console.log(`[v0] Calling depositTokens(${token}, ${amount})`);
+        txHash = await depositTokens(token, amount.toString(), account);
+        break;
 
-      try {
-        const signature = await ethereum.request({
-          method: "personal_sign",
-          params: [message, account],
-        });
-        console.log("[v0] Transaction signed by MetaMask:", signature);
-      } catch (signError: any) {
-        console.error("[v0] MetaMask signing error:", signError);
-        console.error("[v0] Error details:", {
-          code: signError?.code,
-          message: signError?.message,
-          data: signError?.data,
-          stack: signError?.stack,
-        });
-        setIsLoading(false);
-
-        // Extract error code and message
-        const errorCode = signError?.code || signError?.error?.code;
-        const errorMessage =
-          signError?.message ||
-          signError?.error?.message ||
-          JSON.stringify(signError);
-
-        // Handle user rejection (MetaMask code 4001)
-        if (errorCode === 4001 || errorCode === "ACTION_REJECTED") {
-          console.log("[v0] User rejected the transaction");
-          alert("Transaction cancelled by user");
-          return false;
+      case "borrow":
+        if (!collateralToken || !collateralAmount) {
+          throw new Error("Collateral information required for borrow");
         }
+        console.log(
+          `[v0] Calling borrowTokens(${collateralToken}, ${collateralAmount}, ${token}, ${amount})`
+        );
+        txHash = await borrowTokens(
+          collateralToken,
+          collateralAmount.toString(),
+          token,
+          amount.toString()
+        );
+        break;
 
-        // Handle internal errors
-        if (errorCode === -32603) {
-          console.log("[v0] Internal JSON-RPC error");
-          alert("Transaction rejected: " + errorMessage);
-          return false;
-        }
+      case "repay":
+        // For repay, we'll use loan ID 0 for now (in real app, track user's loans)
+        console.log(`[v0] Calling repayLoan(0, ${token}, ${amount})`);
+        txHash = await repayLoan(0, token, amount.toString());
+        break;
 
-        // Handle other MetaMask errors
-        if (errorMessage && errorMessage !== "{}") {
-          console.log("[v0] MetaMask error:", errorMessage);
-          alert("Failed to sign transaction: " + errorMessage);
-          return false;
-        }
+      case "flashloan":
+        console.log(`[v0] Calling executeFlashLoan(${token}, ${amount})`);
+        txHash = await executeFlashLoan(token, amount.toString());
+        break;
 
-        // Generic error fallback
-        console.log("[v0] Unknown error during signing");
-        alert("Transaction cancelled or failed. Please try again.");
-        return false;
-      }
+      default:
+        throw new Error(`Unknown transaction type: ${type}`);
     }
 
-    // Simulate transaction processing
-    console.log("[v0] Processing transaction...");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("[v0] Real blockchain transaction confirmed:", txHash);
 
-    const txHash = "0x" + Math.random().toString(16).substr(2, 40);
+    // Create transaction record with REAL hash
     const newTransaction: LoanHistoryItem = {
       id: Date.now().toString(),
       type: type as "supply" | "borrow" | "repay" | "flashloan",
@@ -126,7 +115,7 @@ const executeTransaction = async (
       amount,
       apy,
       date: new Date().toLocaleString(),
-      txHash,
+      txHash: txHash, // Real transaction hash from blockchain
     };
 
     setLoanHistory([newTransaction, ...loanHistory]);
@@ -146,12 +135,23 @@ const executeTransaction = async (
 
     setIsLoading(false);
     console.log("[v0] Transaction successful:", txHash);
-    alert(`Transaction successful! Tx: ${txHash}`);
+    alert(
+      `Transaction successful!\n\nTx Hash: ${txHash}\n\nYou can view this transaction in MetaMask!`
+    );
     return true;
   } catch (error: any) {
     setIsLoading(false);
     console.error("[v0] Transaction failed:", error);
-    alert("Transaction failed: " + (error.message || "Unknown error"));
+
+    // Handle user rejection
+    if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+      alert("Transaction cancelled by user");
+      return false;
+    }
+
+    // Handle other errors
+    const errorMessage = error.reason || error.message || "Unknown error";
+    alert("Transaction failed: " + errorMessage);
     return false;
   }
 };
@@ -623,7 +623,9 @@ export default function Page() {
     type: string,
     token: string,
     amount: number,
-    apy: number
+    apy: number,
+    collateralToken?: string,
+    collateralAmount?: number
   ) => {
     return await executeTransaction(
       type,
@@ -635,7 +637,9 @@ export default function Page() {
       setLoanHistory,
       loanHistory,
       setReputation,
-      reputation
+      reputation,
+      collateralToken,
+      collateralAmount
     );
   };
 
@@ -777,7 +781,11 @@ export default function Page() {
 
           {/* Page Content */}
           {currentPage === "dashboard" && (
-            <DashboardContent markets={markets} reputation={reputation} />
+            <DashboardContent
+              markets={markets}
+              reputation={reputation}
+              account={account}
+            />
           )}
           {currentPage === "supply" && (
             <SupplyContent
@@ -820,15 +828,90 @@ export default function Page() {
 function DashboardContent({
   markets,
   reputation,
+  account,
 }: {
   markets: Market[];
   reputation: number;
+  account: string | null;
 }) {
+  const [minting, setMinting] = useState(false);
+
+  const handleMintTokens = async (tokenSymbol: string) => {
+    if (!account) {
+      alert("Please connect your wallet first");
+      return;
+    }
+
+    setMinting(true);
+    try {
+      console.log(`[v0] Minting 1000 ${tokenSymbol} test tokens...`);
+      const txHash = await mintTestTokens(tokenSymbol, "1000", account);
+      alert(
+        `Successfully minted 1000 ${tokenSymbol}!\n\nTx Hash: ${txHash}\n\nCheck your MetaMask!`
+      );
+    } catch (error: any) {
+      console.error("[v0] Mint error:", error);
+      alert("Failed to mint tokens: " + (error.message || "Unknown error"));
+    } finally {
+      setMinting(false);
+    }
+  };
+
   return (
     <div>
       <h2 style={{ color: "#64c8ff", fontSize: "2rem", marginBottom: "2rem" }}>
         Market Overview
       </h2>
+
+      {/* Test Tokens Section */}
+      <div
+        style={{
+          background: "rgba(100, 200, 255, 0.1)",
+          border: "1px solid rgba(100, 200, 255, 0.3)",
+          borderRadius: "1rem",
+          padding: "1.5rem",
+          marginBottom: "2rem",
+        }}
+      >
+        <h3
+          style={{
+            color: "#64c8ff",
+            fontSize: "1.25rem",
+            marginBottom: "1rem",
+          }}
+        >
+          🪙 Get Test Tokens (Local Network Only)
+        </h3>
+        <p
+          style={{ color: "#999", marginBottom: "1rem", fontSize: "0.875rem" }}
+        >
+          Mint test tokens to your wallet to try out the lending platform!
+        </p>
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          {["DAI", "USDC", "WETH"].map((token) => (
+            <button
+              key={token}
+              onClick={() => handleMintTokens(token)}
+              disabled={minting}
+              style={{
+                padding: "0.75rem 1.5rem",
+                background: minting
+                  ? "#555"
+                  : "linear-gradient(135deg, #64c8ff 0%, #4db8e8 100%)",
+                color: "#0f1419",
+                border: "none",
+                borderRadius: "0.5rem",
+                cursor: minting ? "not-allowed" : "pointer",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+              }}
+            >
+              {minting ? "Minting..." : `Mint 1000 ${token}`}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div
         style={{
           display: "grid",
@@ -1070,7 +1153,9 @@ function BorrowContent({ markets, onSubmit, isLoading }: any) {
       "borrow",
       borrowToken,
       parseFloat(borrowAmount),
-      market?.borrowAPY || 0
+      market?.borrowAPY || 0,
+      collateralToken,
+      parseFloat(collateralAmount)
     );
     setCollateralAmount("");
     setBorrowAmount("");

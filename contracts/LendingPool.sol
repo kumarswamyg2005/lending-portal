@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -83,7 +83,7 @@ contract LendingPool is ReentrancyGuard, Ownable {
     );
     event ReputationUpdated(address indexed user, int256 change, uint256 newReputation);
 
-    constructor(address _interestModel) {
+    constructor(address _interestModel) Ownable(msg.sender) {
         interestModel = IVariableInterestRateModel(_interestModel);
     }
 
