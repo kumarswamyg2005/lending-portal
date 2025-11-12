@@ -6,6 +6,12 @@ import {
   TOKEN_ADDRESSES,
 } from "./contracts";
 
+// Gas settings for local network (low fees)
+const LOCAL_GAS_SETTINGS = {
+  maxPriorityFeePerGas: ethers.parseUnits("1", "gwei"),
+  maxFeePerGas: ethers.parseUnits("2", "gwei"),
+};
+
 // Get provider from MetaMask
 export function getProvider() {
   if (typeof window === "undefined" || !(window as any).ethereum) {
@@ -44,7 +50,11 @@ export async function mintTestTokens(
       `[Blockchain] Minting ${amount} ${tokenSymbol} to ${recipient}`
     );
 
-    const tx = await tokenContract.mint(recipient, amountWei);
+    // Use lower gas settings for local network
+    const tx = await tokenContract.mint(recipient, amountWei, {
+      gasLimit: 100000,
+      ...LOCAL_GAS_SETTINGS,
+    });
     console.log(`[Blockchain] Mint transaction sent: ${tx.hash}`);
 
     const receipt = await tx.wait();
@@ -90,7 +100,8 @@ export async function depositTokens(
     );
     const approveTx = await tokenContract.approve(
       CONTRACTS.lendingPool,
-      amountWei
+      amountWei,
+      { gasLimit: 100000, ...LOCAL_GAS_SETTINGS }
     );
     console.log(`[Blockchain] Approval transaction sent: ${approveTx.hash}`);
     await approveTx.wait();
@@ -100,7 +111,8 @@ export async function depositTokens(
     console.log(`[Blockchain] Depositing tokens to lending pool`);
     const depositTx = await lendingPoolContract.deposit(
       tokenAddress,
-      amountWei
+      amountWei,
+      { gasLimit: 200000, ...LOCAL_GAS_SETTINGS }
     );
     console.log(`[Blockchain] Deposit transaction sent: ${depositTx.hash}`);
 
