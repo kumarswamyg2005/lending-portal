@@ -595,40 +595,29 @@ export default function Page() {
     // Implement network switching logic here
   };
 
-  // Check if MetaMask is already connected on page load
+  // Note: Auto-connect disabled - user must manually click "Connect Wallet"
+  // If you want to restore auto-connect, uncomment the useEffect below:
+  /*
   useEffect(() => {
     const checkConnection = async () => {
       if (typeof window === "undefined") return;
-
       const ethereum = (window as any).ethereum;
-
-      if (!ethereum) {
-        console.log("[v0] MetaMask not installed on page load");
-        return;
-      }
-
+      if (!ethereum) return;
+      
       try {
-        // Check if already connected
         const accounts = await ethereum.request({ method: "eth_accounts" });
-
         if (accounts && accounts.length > 0) {
-          console.log("[v0] Already connected to MetaMask:", accounts[0]);
           setAccount(accounts[0]);
           setIsConnected(true);
           setReputation(120);
-
-          const chainId = await ethereum.request({ method: "eth_chainId" });
-          console.log("[v0] Chain ID:", chainId);
-        } else {
-          console.log("[v0] MetaMask not connected yet");
         }
       } catch (error) {
         console.error("[v0] Error checking connection:", error);
       }
     };
-
     checkConnection();
   }, []);
+  */
 
   const handleTransaction = async (
     type: string,
