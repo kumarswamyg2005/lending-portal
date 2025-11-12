@@ -1,0 +1,45 @@
+MIT License - Educational Use Only
+
+Copyright (c) 2025 DeFi Lending Platform Demo
+
+**IMPORTANT NOTICE:**
+This software is provided for EDUCATIONAL and DEMONSTRATION purposes only.
+This project uses TEST TOKENS on a LOCAL BLOCKCHAIN and handles NO REAL MONEY.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction for educational purposes, including without 
+limitation the rights to use, copy, modify, merge, publish, and distribute 
+copies of the Software for learning and demonstration purposes, subject to 
+the following conditions:
+
+1. The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+2. THIS SOFTWARE IS FOR EDUCATIONAL PURPOSES ONLY. It is NOT intended for use
+   with real cryptocurrency or real financial transactions.
+
+3. This software runs on a LOCAL TEST BLOCKCHAIN (Hardhat) and uses TEST TOKENS
+   with NO REAL VALUE.
+
+4. Any deployment to a mainnet or use with real cryptocurrency is done at the
+   user's own risk and is NOT recommended or supported.
+
+5. The authors are NOT responsible for any financial losses incurred from
+   misuse of this educational software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+DISCLAIMER:
+- This is a DEMO/TEST project for learning blockchain development
+- Uses HARDHAT local blockchain (no real blockchain network)
+- All tokens are TEST TOKENS with NO monetary value
+- NO REAL MONEY, NO REAL CRYPTOCURRENCY is involved
+- NOT audited for security - DO NOT use in production
+- Educational and demonstration purposes ONLY

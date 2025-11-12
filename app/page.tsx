@@ -687,9 +687,9 @@ export default function Page() {
             <p
               style={{ color: "#999", marginBottom: "2rem", lineHeight: "1.6" }}
             >
-              Please connect MetaMask to access the DeFi Lending Platform.
-              Supply tokens to earn interest, borrow against collateral, or
-              execute flash loans.
+              Please connect your MetaMask wallet to access the DeFi Lending
+              Platform. Supply tokens to earn interest, borrow against
+              collateral, or execute flash loans.
             </p>
             <button
               onClick={connectWallet}
@@ -880,12 +880,12 @@ function DashboardContent({
             marginBottom: "1rem",
           }}
         >
-          🪙 Get Test Tokens (Local Network Only)
+          🪙 Get Tokens
         </h3>
         <p
           style={{ color: "#999", marginBottom: "1rem", fontSize: "0.875rem" }}
         >
-          Mint test tokens to your wallet to try out the lending platform!
+          Mint tokens to your wallet to start using the platform!
         </p>
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
           {["DAI", "USDC", "WETH"].map((token) => (

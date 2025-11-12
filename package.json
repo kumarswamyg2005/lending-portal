@@ -1,8 +1,22 @@
 {
-  "name": "my-v0-project",
+  "name": "defi-lending-platform-demo",
   "version": "0.1.0",
+  "description": "Demo DeFi Lending Platform - Test Environment Only (NO REAL MONEY)",
   "private": true,
   "type": "module",
+  "author": "DeFi Demo Project",
+  "license": "MIT",
+  "keywords": [
+    "defi",
+    "lending",
+    "demo",
+    "test",
+    "educational",
+    "blockchain",
+    "hardhat",
+    "solidity"
+  ],
+  "disclaimer": "This is a TEST/DEMO project for educational purposes only. Uses test tokens on local blockchain. NO REAL MONEY involved.",
   "scripts": {
     "build": "next build",
     "dev": "next dev",

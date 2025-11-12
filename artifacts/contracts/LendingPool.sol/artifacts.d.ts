@@ -15,7 +15,7 @@ export interface IFlashLoanReceiver$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/LendingPool.sol";
-  readonly buildInfoId: "solc-0_8_20-c383f3efa3a4fdaf5ca401f96ad08e7224980ee8";
+  readonly buildInfoId: "solc-0_8_20-f075b34dc0e46081d3c273c73417a402e9102024";
 };
 
 export interface IVariableInterestRateModel$Type {
@@ -29,7 +29,7 @@ export interface IVariableInterestRateModel$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/LendingPool.sol";
-  readonly buildInfoId: "solc-0_8_20-c383f3efa3a4fdaf5ca401f96ad08e7224980ee8";
+  readonly buildInfoId: "solc-0_8_20-f075b34dc0e46081d3c273c73417a402e9102024";
 };
 
 export interface LendingPool$Type {
@@ -43,7 +43,7 @@ export interface LendingPool$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/LendingPool.sol";
-  readonly buildInfoId: "solc-0_8_20-c383f3efa3a4fdaf5ca401f96ad08e7224980ee8";
+  readonly buildInfoId: "solc-0_8_20-f075b34dc0e46081d3c273c73417a402e9102024";
 };
 
 import "hardhat/types/artifacts";
