@@ -6,24 +6,18 @@ import {
   TOKEN_ADDRESSES,
 } from "./contracts";
 
-// Gas settings for local network (low fees)
-const LOCAL_GAS_SETTINGS = {
-  maxPriorityFeePerGas: ethers.parseUnits("1", "gwei"),
-  maxFeePerGas: ethers.parseUnits("2", "gwei"),
-};
-
-// Get provider from MetaMask
+// Get provider from MetaMask (uses whatever network MetaMask is connected to)
 export function getProvider() {
   if (typeof window === "undefined" || !(window as any).ethereum) {
     throw new Error("MetaMask not installed");
   }
-  return new ethers.BrowserProvider((window as any).ethereum);
+  return new ethers.providers.Web3Provider((window as any).ethereum);
 }
 
 // Get signer (connected wallet)
 export async function getSigner() {
   const provider = getProvider();
-  return await provider.getSigner();
+  return provider.getSigner();
 }
 
 // Mint test tokens (only works with mock tokens on local network)
@@ -34,6 +28,23 @@ export async function mintTestTokens(
 ) {
   try {
     const signer = await getSigner();
+    const provider = getProvider();
+
+    // Check ETH balance first
+    const balance = await provider.getBalance(recipient);
+    console.log(
+      `[Blockchain] Account ETH balance: ${ethers.utils.formatEther(
+        balance
+      )} ETH`
+    );
+
+    if (balance.isZero()) {
+      console.warn(
+        `⚠️ Warning: No TEST ETH in account. Transaction may fail without gas funds.`
+      );
+      // Don't throw - let the user try anyway. MetaMask will handle the error.
+    }
+
     const tokenAddress = TOKEN_ADDRESSES[tokenSymbol];
 
     if (!tokenAddress) {
@@ -44,17 +55,14 @@ export async function mintTestTokens(
 
     // Get decimals
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(amount, decimals);
+    const amountWei = ethers.utils.parseUnits(amount, decimals);
 
     console.log(
       `[Blockchain] Minting ${amount} ${tokenSymbol} to ${recipient}`
     );
 
-    // Use lower gas settings for local network
-    const tx = await tokenContract.mint(recipient, amountWei, {
-      gasLimit: 100000,
-      ...LOCAL_GAS_SETTINGS,
-    });
+    // Let MetaMask estimate gas automatically
+    const tx = await tokenContract.mint(recipient, amountWei);
     console.log(`[Blockchain] Mint transaction sent: ${tx.hash}`);
 
     const receipt = await tx.wait();
@@ -90,18 +98,34 @@ export async function depositTokens(
 
     // Get decimals
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(amount, decimals);
+    const amountWei = ethers.utils.parseUnits(amount, decimals);
 
     console.log(`[Blockchain] Depositing ${amount} ${tokenSymbol}`);
 
-    // Step 1: Approve lending pool to spend tokens
+    // Step 1: Approve lending pool to spend tokens (approve maximum for better UX)
+    const maxApproval = ethers.constants.MaxUint256; // Approve unlimited amount
     console.log(
-      `[Blockchain] Approving ${CONTRACTS.lendingPool} to spend ${amount} ${tokenSymbol}`
+      `[Blockchain] Approving ${CONTRACTS.lendingPool} to spend unlimited ${tokenSymbol} (one-time approval)`
     );
+
+    // Try to estimate gas first to catch validation errors early
+    try {
+      await tokenContract.estimateGas.approve(
+        CONTRACTS.lendingPool,
+        maxApproval
+      );
+    } catch (estimateError: any) {
+      // Suppress gas estimation errors from console, will be caught by transaction
+      if (estimateError.message?.includes("cannot estimate gas")) {
+        console.log(
+          "[Blockchain] Gas estimation skipped, proceeding with transaction"
+        );
+      }
+    }
+
     const approveTx = await tokenContract.approve(
       CONTRACTS.lendingPool,
-      amountWei,
-      { gasLimit: 100000, ...LOCAL_GAS_SETTINGS }
+      maxApproval
     );
     console.log(`[Blockchain] Approval transaction sent: ${approveTx.hash}`);
     await approveTx.wait();
@@ -109,10 +133,20 @@ export async function depositTokens(
 
     // Step 2: Deposit tokens
     console.log(`[Blockchain] Depositing tokens to lending pool`);
+
+    // Try to estimate gas for deposit
+    try {
+      await lendingPoolContract.estimateGas.deposit(tokenAddress, amountWei);
+    } catch (estimateError: any) {
+      // Suppress gas estimation errors from console
+      if (estimateError.message?.includes("cannot estimate gas")) {
+        console.log("[Blockchain] Gas estimation skipped for deposit");
+      }
+    }
+
     const depositTx = await lendingPoolContract.deposit(
       tokenAddress,
-      amountWei,
-      { gasLimit: 200000, ...LOCAL_GAS_SETTINGS }
+      amountWei
     );
     console.log(`[Blockchain] Deposit transaction sent: ${depositTx.hash}`);
 
@@ -164,26 +198,70 @@ export async function borrowTokens(
     );
     const borrowDecimals = await borrowTokenContract.decimals();
 
-    const collateralAmountWei = ethers.parseUnits(
+    const collateralAmountWei = ethers.utils.parseUnits(
       collateralAmount,
       collateralDecimals
     );
-    const borrowAmountWei = ethers.parseUnits(borrowAmount, borrowDecimals);
+    const borrowAmountWei = ethers.utils.parseUnits(
+      borrowAmount,
+      borrowDecimals
+    );
 
     console.log(
       `[Blockchain] Borrowing ${borrowAmount} ${borrowTokenSymbol} with ${collateralAmount} ${collateralTokenSymbol} collateral`
     );
 
-    // Step 1: Approve collateral
+    // Step 1: Approve collateral (unlimited approval for better UX)
     console.log(`[Blockchain] Approving collateral`);
+
+    // Try to estimate gas, suppress errors
+    try {
+      await collateralTokenContract.estimateGas.approve(
+        CONTRACTS.lendingPool,
+        ethers.constants.MaxUint256
+      );
+    } catch (estimateError: any) {
+      if (estimateError.message?.includes("cannot estimate gas")) {
+        console.log(
+          "[Blockchain] Gas estimation skipped for collateral approval"
+        );
+      }
+    }
+
     const approveTx = await collateralTokenContract.approve(
       CONTRACTS.lendingPool,
-      collateralAmountWei
+      ethers.constants.MaxUint256
     );
     await approveTx.wait();
     console.log(`[Blockchain] Collateral approved`);
 
-    // Step 2: Borrow
+    // Step 2: Borrow - try to estimate gas first to catch LTV errors early
+    try {
+      await lendingPoolContract.estimateGas.borrow(
+        collateralTokenAddress,
+        collateralAmountWei,
+        borrowTokenAddress,
+        borrowAmountWei
+      );
+    } catch (estimateError: any) {
+      // Check for specific validation errors
+      if (estimateError.message?.includes("Exceeds LTV limit")) {
+        throw new Error(
+          "Borrow amount exceeds the allowed loan-to-value ratio (max 75%). Please reduce the borrow amount or increase collateral."
+        );
+      } else if (estimateError.message?.includes("Insufficient liquidity")) {
+        throw new Error(
+          "Not enough liquidity in the pool for this borrow amount."
+        );
+      } else if (estimateError.message?.includes("cannot estimate gas")) {
+        // Generic gas estimation error - let transaction proceed, it will fail with proper error
+        console.log("[Blockchain] Gas estimation skipped for borrow");
+      } else {
+        // Re-throw other errors
+        throw estimateError;
+      }
+    }
+
     const borrowTx = await lendingPoolContract.borrow(
       collateralTokenAddress,
       collateralAmountWei,
@@ -226,20 +304,39 @@ export async function repayLoan(
     );
 
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(repayAmount, decimals);
+    const amountWei = ethers.utils.parseUnits(repayAmount, decimals);
 
     console.log(
       `[Blockchain] Repaying loan #${loanId} with ${repayAmount} ${tokenSymbol}`
     );
 
-    // Approve tokens
+    // Approve tokens (unlimited approval for better UX)
+    try {
+      await tokenContract.estimateGas.approve(
+        CONTRACTS.lendingPool,
+        ethers.constants.MaxUint256
+      );
+    } catch (estimateError: any) {
+      if (estimateError.message?.includes("cannot estimate gas")) {
+        console.log("[Blockchain] Gas estimation skipped for repay approval");
+      }
+    }
+
     const approveTx = await tokenContract.approve(
       CONTRACTS.lendingPool,
-      amountWei
+      ethers.constants.MaxUint256
     );
     await approveTx.wait();
 
     // Repay
+    try {
+      await lendingPoolContract.estimateGas.repay(loanId, amountWei);
+    } catch (estimateError: any) {
+      if (estimateError.message?.includes("cannot estimate gas")) {
+        console.log("[Blockchain] Gas estimation skipped for repay");
+      }
+    }
+
     const repayTx = await lendingPoolContract.repay(loanId, amountWei);
     console.log(`[Blockchain] Repay transaction sent: ${repayTx.hash}`);
 
@@ -271,13 +368,30 @@ export async function executeFlashLoan(tokenSymbol: string, amount: string) {
     );
 
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(amount, decimals);
+    const amountWei = ethers.utils.parseUnits(amount, decimals);
 
     console.log(
       `[Blockchain] Executing flash loan for ${amount} ${tokenSymbol}`
     );
 
     // Execute flash loan with flash loan receiver contract
+    try {
+      await lendingPoolContract.estimateGas.flashLoan(
+        CONTRACTS.flashLoanReceiver,
+        tokenAddress,
+        amountWei,
+        "0x"
+      );
+    } catch (estimateError: any) {
+      if (estimateError.message?.includes("cannot estimate gas")) {
+        console.log("[Blockchain] Gas estimation skipped for flash loan");
+      } else if (estimateError.message?.includes("Insufficient liquidity")) {
+        throw new Error(
+          "Not enough liquidity in the pool for this flash loan amount."
+        );
+      }
+    }
+
     const flashLoanTx = await lendingPoolContract.flashLoan(
       CONTRACTS.flashLoanReceiver,
       tokenAddress,
@@ -321,7 +435,7 @@ export async function getTokenBalance(
     const balance = await tokenContract.balanceOf(account);
     const decimals = await tokenContract.decimals();
 
-    return ethers.formatUnits(balance, decimals);
+    return ethers.utils.formatUnits(balance, decimals);
   } catch (error: any) {
     console.error("[Blockchain] Balance error:", error);
     return "0";

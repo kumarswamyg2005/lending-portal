@@ -8,6 +8,8 @@ import {
   executeFlashLoan,
   mintTestTokens,
 } from "../lib/blockchain";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 // Types
 type Page =
@@ -51,15 +53,34 @@ const executeTransaction = async (
   loanHistory: any,
   setReputation: any,
   reputation: any,
+  toast: any,
   collateralToken?: string,
   collateralAmount?: number
 ) => {
   if (!account) {
-    alert("Please connect your MetaMask wallet first");
+    toast({
+      title: "Wallet Not Connected",
+      description: "Please connect your MetaMask wallet first",
+      variant: "destructive",
+    });
     return false;
   }
 
   setIsLoading(true);
+
+  // Show processing toast
+  toast({
+    title: "Processing Transaction",
+    description: `${
+      type === "supply"
+        ? "Supplying"
+        : type === "borrow"
+        ? "Borrowing"
+        : type === "repay"
+        ? "Repaying"
+        : "Executing flash loan for"
+    } ${amount} ${token}...`,
+  });
 
   try {
     console.log(
@@ -135,9 +156,25 @@ const executeTransaction = async (
 
     setIsLoading(false);
     console.log("[v0] Transaction successful:", txHash);
-    alert(
-      `Transaction successful!\n\nTx Hash: ${txHash}\n\nYou can view this transaction in MetaMask!`
-    );
+
+    // Show success toast with transaction details
+    const actionWord =
+      type === "supply"
+        ? "Deposited"
+        : type === "borrow"
+        ? "Borrowed"
+        : type === "repay"
+        ? "Repaid"
+        : type === "flashloan"
+        ? "Flash Loan Executed"
+        : "Completed";
+
+    toast({
+      title: "Transaction Successful! ✅",
+      description: `${actionWord} ${amount} ${token}. You earned +${reputationGain} reputation points!`,
+      variant: "default",
+    });
+
     return true;
   } catch (error: any) {
     setIsLoading(false);
@@ -145,13 +182,65 @@ const executeTransaction = async (
 
     // Handle user rejection
     if (error.code === 4001 || error.code === "ACTION_REJECTED") {
-      alert("Transaction cancelled by user");
+      toast({
+        title: "Transaction Cancelled",
+        description: "You cancelled the transaction",
+        variant: "default",
+      });
       return false;
     }
 
-    // Handle other errors
-    const errorMessage = error.reason || error.message || "Unknown error";
-    alert("Transaction failed: " + errorMessage);
+    // Extract meaningful error message
+    let errorMessage = "Unknown error";
+    let errorTitle = "Transaction Failed";
+
+    if (error.message) {
+      // Check for common error patterns
+      if (error.message.includes("insufficient funds")) {
+        errorTitle = "Insufficient Funds";
+        errorMessage = "You don't have enough ETH to pay for gas fees.";
+      } else if (error.message.includes("user rejected")) {
+        errorMessage = "Transaction cancelled by user";
+        return false;
+      } else if (error.message.includes("Token not supported")) {
+        errorTitle = "Token Not Supported";
+        errorMessage = "This token is not supported by the lending pool";
+      } else if (error.message.includes("Amount must be > 0")) {
+        errorTitle = "Invalid Amount";
+        errorMessage = "Amount must be greater than 0";
+      } else if (error.message.includes("Insufficient balance")) {
+        errorTitle = "Insufficient Balance";
+        errorMessage =
+          "You don't have enough tokens to complete this transaction";
+      } else if (error.message.includes("Exceeds LTV limit")) {
+        errorTitle = "LTV Limit Exceeded";
+        errorMessage =
+          "Borrow amount exceeds the allowed loan-to-value ratio (max 75%). Please reduce the borrow amount or increase collateral.";
+      } else if (error.message.includes("Insufficient liquidity")) {
+        errorTitle = "Insufficient Liquidity";
+        errorMessage = "Not enough liquidity in the pool for this transaction";
+      } else if (
+        error.message.includes("execution reverted") ||
+        error.message.includes("revert")
+      ) {
+        errorTitle = "Smart Contract Error";
+        errorMessage =
+          "Please check: You have enough tokens, token is approved, and you meet all requirements";
+      } else {
+        errorMessage = error.message;
+      }
+    } else if (error.reason) {
+      errorMessage = error.reason;
+    } else if (error.data?.message) {
+      errorMessage = error.data.message;
+    }
+
+    toast({
+      title: errorTitle,
+      description: errorMessage,
+      variant: "destructive",
+    });
+
     return false;
   }
 };
@@ -496,6 +585,7 @@ function Navbar({
 }
 
 export default function Page() {
+  const { toast } = useToast();
   const [account, setAccount] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [reputation, setReputation] = useState(0);
@@ -638,6 +728,7 @@ export default function Page() {
       loanHistory,
       setReputation,
       reputation,
+      toast,
       collateralToken,
       collateralAmount
     );
@@ -645,6 +736,7 @@ export default function Page() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0e14" }}>
+      <Toaster />
       <Navbar
         account={account}
         isConnected={isConnected}
@@ -847,11 +939,27 @@ function DashboardContent({
       console.log(`[v0] Minting 1000 ${tokenSymbol} test tokens...`);
       const txHash = await mintTestTokens(tokenSymbol, "1000", account);
       alert(
-        `Successfully minted 1000 ${tokenSymbol}!\n\nTx Hash: ${txHash}\n\nCheck your MetaMask!`
+        `✅ Successfully minted 1000 ${tokenSymbol}!\n\nTransaction Hash:\n${txHash}\n\nCheck MetaMask Activity tab to see the transaction!`
       );
     } catch (error: any) {
       console.error("[v0] Mint error:", error);
-      alert("Failed to mint tokens: " + (error.message || "Unknown error"));
+
+      // Better error messages
+      let errorMsg = "Failed to mint tokens: ";
+
+      if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+        errorMsg =
+          "❌ Transaction was rejected in MetaMask.\n\nPlease try again and click 'Confirm' in MetaMask.";
+      } else if (error.message?.includes("insufficient funds")) {
+        errorMsg =
+          "❌ Insufficient ETH for gas fees.\n\nMake sure you're using a Hardhat test account with 10,000 ETH.";
+      } else if (error.message) {
+        errorMsg += error.message;
+      } else {
+        errorMsg += "Unknown error. Check console for details.";
+      }
+
+      alert(errorMsg);
     } finally {
       setMinting(false);
     }
@@ -1009,16 +1117,53 @@ function DashboardContent({
 function SupplyContent({ markets, onSubmit, isLoading }: any) {
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [amount, setAmount] = useState("");
+  const [validationError, setValidationError] = useState("");
 
   const selectedMarket = markets.find(
     (m: Market) => m.symbol === selectedToken
   );
 
-  const handleSubmit = async () => {
-    if (!amount || parseFloat(amount) <= 0) {
-      alert("Please enter a valid amount");
+  // Validate amount in real-time
+  const validateAmount = (value: string) => {
+    if (!value || value === "") {
+      setValidationError("");
       return;
     }
+
+    const numAmount = parseFloat(value);
+
+    if (isNaN(numAmount) || numAmount <= 0) {
+      setValidationError("Amount must be greater than 0");
+      return;
+    }
+
+    if (selectedMarket && numAmount > selectedMarket.userBalance) {
+      setValidationError(
+        `Amount exceeds available balance (${selectedMarket.userBalance.toLocaleString()})`
+      );
+      return;
+    }
+
+    setValidationError("");
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setAmount(value);
+    validateAmount(value);
+  };
+
+  const handleSubmit = async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      setValidationError("Please enter a valid amount");
+      return;
+    }
+
+    if (selectedMarket && parseFloat(amount) > selectedMarket.userBalance) {
+      setValidationError(`Amount exceeds available balance`);
+      return;
+    }
+
     await onSubmit(
       "supply",
       selectedToken,
@@ -1026,6 +1171,7 @@ function SupplyContent({ markets, onSubmit, isLoading }: any) {
       selectedMarket?.supplyAPY || 0
     );
     setAmount("");
+    setValidationError("");
   };
 
   return (
@@ -1087,14 +1233,16 @@ function SupplyContent({ markets, onSubmit, isLoading }: any) {
           <input
             type="number"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={handleAmountChange}
             placeholder="0.00"
             style={{
               width: "100%",
               padding: "0.75rem",
               background: "rgba(15, 20, 25, 0.8)",
               color: "#fff",
-              border: "1px solid rgba(100, 200, 255, 0.2)",
+              border: validationError
+                ? "1px solid rgba(255, 100, 100, 0.5)"
+                : "1px solid rgba(100, 200, 255, 0.2)",
               borderRadius: "0.5rem",
               fontSize: "1rem",
             }}
@@ -1108,6 +1256,17 @@ function SupplyContent({ markets, onSubmit, isLoading }: any) {
               }}
             >
               Available: ${selectedMarket.userBalance.toLocaleString()}
+            </p>
+          )}
+          {validationError && (
+            <p
+              style={{
+                color: "#ff6464",
+                fontSize: "0.75rem",
+                marginTop: "0.5rem",
+              }}
+            >
+              ⚠️ {validationError}
             </p>
           )}
         </div>
@@ -1142,12 +1301,65 @@ function BorrowContent({ markets, onSubmit, isLoading }: any) {
   const [collateralAmount, setCollateralAmount] = useState("");
   const [borrowToken, setBorrowToken] = useState("DAI");
   const [borrowAmount, setBorrowAmount] = useState("");
+  const [validationError, setValidationError] = useState("");
+
+  const LTV_RATIO = 0.75; // 75% max LTV
+
+  // Validate borrow amount against LTV limit
+  const validateBorrowAmount = (borrowAmt: string, collAmt: string) => {
+    if (!borrowAmt || !collAmt || borrowAmt === "" || collAmt === "") {
+      setValidationError("");
+      return;
+    }
+
+    const borrow = parseFloat(borrowAmt);
+    const collateral = parseFloat(collAmt);
+
+    if (isNaN(borrow) || isNaN(collateral)) {
+      setValidationError("");
+      return;
+    }
+
+    if (borrow <= 0 || collateral <= 0) {
+      setValidationError("Amounts must be greater than 0");
+      return;
+    }
+
+    // Check LTV ratio (simplified - assumes 1:1 token prices for demo)
+    const ltv = borrow / collateral;
+    if (ltv > LTV_RATIO) {
+      const maxBorrow = (collateral * LTV_RATIO).toFixed(2);
+      setValidationError(
+        `Borrow amount exceeds 75% LTV limit. Max borrow with ${collAmt} collateral: ${maxBorrow} ${borrowToken}`
+      );
+      return;
+    }
+
+    setValidationError("");
+  };
+
+  const handleCollateralChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCollateralAmount(value);
+    validateBorrowAmount(borrowAmount, value);
+  };
+
+  const handleBorrowChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setBorrowAmount(value);
+    validateBorrowAmount(value, collateralAmount);
+  };
 
   const handleSubmit = async () => {
     if (!collateralAmount || !borrowAmount) {
-      alert("Please enter both collateral and borrow amounts");
+      setValidationError("Please enter both collateral and borrow amounts");
       return;
     }
+
+    if (validationError) {
+      return; // Don't submit if there's a validation error
+    }
+
     const market = markets.find((m: Market) => m.symbol === borrowToken);
     await onSubmit(
       "borrow",
@@ -1159,6 +1371,7 @@ function BorrowContent({ markets, onSubmit, isLoading }: any) {
     );
     setCollateralAmount("");
     setBorrowAmount("");
+    setValidationError("");
   };
 
   return (
@@ -1220,14 +1433,16 @@ function BorrowContent({ markets, onSubmit, isLoading }: any) {
           <input
             type="number"
             value={collateralAmount}
-            onChange={(e) => setCollateralAmount(e.target.value)}
+            onChange={handleCollateralChange}
             placeholder="0.00"
             style={{
               width: "100%",
               padding: "0.75rem",
               background: "rgba(15, 20, 25, 0.8)",
               color: "#fff",
-              border: "1px solid rgba(100, 200, 255, 0.2)",
+              border: validationError
+                ? "1px solid rgba(255, 100, 100, 0.5)"
+                : "1px solid rgba(100, 200, 255, 0.2)",
               borderRadius: "0.5rem",
               fontSize: "1rem",
             }}
@@ -1280,14 +1495,16 @@ function BorrowContent({ markets, onSubmit, isLoading }: any) {
           <input
             type="number"
             value={borrowAmount}
-            onChange={(e) => setBorrowAmount(e.target.value)}
+            onChange={handleBorrowChange}
             placeholder="0.00"
             style={{
               width: "100%",
               padding: "0.75rem",
               background: "rgba(15, 20, 25, 0.8)",
               color: "#fff",
-              border: "1px solid rgba(100, 200, 255, 0.2)",
+              border: validationError
+                ? "1px solid rgba(255, 100, 100, 0.5)"
+                : "1px solid rgba(100, 200, 255, 0.2)",
               borderRadius: "0.5rem",
               fontSize: "1rem",
             }}
@@ -1297,6 +1514,17 @@ function BorrowContent({ markets, onSubmit, isLoading }: any) {
           >
             Max LTV: 75% of collateral value
           </p>
+          {validationError && (
+            <p
+              style={{
+                color: "#ff6464",
+                fontSize: "0.75rem",
+                marginTop: "0.5rem",
+              }}
+            >
+              ⚠️ {validationError}
+            </p>
+          )}
         </div>
 
         <button
@@ -1562,6 +1790,7 @@ function FlashLoanContent({ markets, onSubmit, isLoading }: any) {
           disabled={isLoading}
           style={{
             width: "100%",
+            minWidth: "200px",
             padding: "1rem",
             background: isLoading
               ? "#555"
@@ -1572,6 +1801,9 @@ function FlashLoanContent({ markets, onSubmit, isLoading }: any) {
             cursor: isLoading ? "not-allowed" : "pointer",
             fontWeight: 600,
             fontSize: "1rem",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           {isLoading ? "Processing..." : "Execute Flash Loan"}

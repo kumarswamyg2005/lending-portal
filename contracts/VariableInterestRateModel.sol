@@ -9,6 +9,7 @@ interface ILendingPool {
 /// @notice Implements a kinked interest rate model
 contract VariableInterestRateModel {
     ILendingPool public lendingPool;
+    address public owner;
 
     // Interest rate parameters
     uint256 public baseRateBorrow = 2e16; // 2%
@@ -20,6 +21,13 @@ contract VariableInterestRateModel {
     mapping(address => bool) public tokenConfigs;
 
     constructor(address _lendingPool) {
+        lendingPool = ILendingPool(_lendingPool);
+        owner = msg.sender;
+    }
+
+    /// @notice Update lending pool address (for initial setup)
+    function setLendingPool(address _lendingPool) external {
+        require(msg.sender == owner, "Only owner");
         lendingPool = ILendingPool(_lendingPool);
     }
 
