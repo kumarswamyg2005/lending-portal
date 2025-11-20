@@ -1,5 +1,5 @@
 {
-  "_format": "hh3-artifact-1",
+  "_format": "hh-sol-artifact-1",
   "contractName": "IVariableInterestRateModel",
   "sourceName": "contracts/LendingPool.sol",
   "abi": [
@@ -45,8 +45,5 @@
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "linkReferences": {},
-  "deployedLinkReferences": {},
-  "immutableReferences": {},
-  "inputSourceName": "project/contracts/LendingPool.sol",
-  "buildInfoId": "solc-0_8_20-f075b34dc0e46081d3c273c73417a402e9102024"
+  "deployedLinkReferences": {}
 }

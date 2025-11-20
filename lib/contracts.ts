@@ -1,11 +1,15 @@
-// Contract addresses (deployed to Hardhat localhost)
+// Contract addresses
+// To use local Hardhat: Make sure deployment.json exists and run: npm run dev
+// To use a testnet: Update these addresses with your deployed contract addresses
+import deployment from "../deployment.json";
+
 export const CONTRACTS = {
-  dai: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-  usdc: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
-  weth: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
-  lendingPool: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
-  interestModel: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
-  flashLoanReceiver: "0x9A676e781A523b5d0C0e43731313A708CB607508",
+  dai: deployment.tokens.DAI,
+  usdc: deployment.tokens.USDC,
+  weth: deployment.tokens.WETH,
+  lendingPool: deployment.lendingPool,
+  interestModel: deployment.interestModel,
+  flashLoanReceiver: deployment.flashLoanReceiver,
 };
 
 // Contract ABIs
@@ -29,6 +33,7 @@ export const LENDING_POOL_ABI = [
 
 export const TOKEN_ABI = [
   "function approve(address spender, uint256 amount) returns (bool)",
+  "function allowance(address owner, address spender) view returns (uint256)",
   "function balanceOf(address account) view returns (uint256)",
   "function transfer(address to, uint256 amount) returns (bool)",
   "function decimals() view returns (uint8)",

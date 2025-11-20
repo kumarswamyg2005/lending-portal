@@ -6,24 +6,35 @@ import {
   TOKEN_ADDRESSES,
 } from "./contracts";
 
-// Gas settings for local network (low fees)
-const LOCAL_GAS_SETTINGS = {
-  maxPriorityFeePerGas: ethers.parseUnits("1", "gwei"),
-  maxFeePerGas: ethers.parseUnits("2", "gwei"),
-};
-
-// Get provider from MetaMask
+// Get provider from MetaMask (uses whatever network MetaMask is connected to)
 export function getProvider() {
+  console.log("[Blockchain] getProvider called");
+  console.log(
+    "[Blockchain] window.ethereum exists?",
+    typeof window !== "undefined" && !!(window as any).ethereum
+  );
+
   if (typeof window === "undefined" || !(window as any).ethereum) {
-    throw new Error("MetaMask not installed");
+    console.error("[Blockchain] MetaMask not found!");
+    throw new Error(
+      "MetaMask not installed. Please install MetaMask browser extension."
+    );
   }
-  return new ethers.BrowserProvider((window as any).ethereum);
+
+  console.log("[Blockchain] Creating Web3Provider...");
+  const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+  console.log("[Blockchain] Provider created successfully");
+  return provider;
 }
 
 // Get signer (connected wallet)
 export async function getSigner() {
+  console.log("[Blockchain] getSigner called");
   const provider = getProvider();
-  return await provider.getSigner();
+  console.log("[Blockchain] Getting signer from provider...");
+  const signer = provider.getSigner();
+  console.log("[Blockchain] Signer obtained");
+  return signer;
 }
 
 // Mint test tokens (only works with mock tokens on local network)
@@ -32,31 +43,60 @@ export async function mintTestTokens(
   amount: string,
   recipient: string
 ) {
+  console.log("[Blockchain] mintTestTokens called with:", {
+    tokenSymbol,
+    amount,
+    recipient,
+  });
+
   try {
+    console.log("[Blockchain] Getting signer...");
     const signer = await getSigner();
+    const provider = getProvider();
+
+    console.log("[Blockchain] Signer obtained, checking balance...");
+
+    // Check ETH balance first
+    const balance = await provider.getBalance(recipient);
+    console.log(
+      `[Blockchain] Account ETH balance: ${ethers.utils.formatEther(
+        balance
+      )} ETH`
+    );
+
+    if (balance.isZero()) {
+      console.warn(
+        `⚠️ Warning: No TEST ETH in account. Transaction may fail without gas funds.`
+      );
+      // Don't throw - let the user try anyway. MetaMask will handle the error.
+    }
+
     const tokenAddress = TOKEN_ADDRESSES[tokenSymbol];
+    console.log(`[Blockchain] Token address for ${tokenSymbol}:`, tokenAddress);
 
     if (!tokenAddress) {
       throw new Error(`Token ${tokenSymbol} not found`);
     }
 
+    console.log("[Blockchain] Creating token contract...");
     const tokenContract = new ethers.Contract(tokenAddress, TOKEN_ABI, signer);
 
     // Get decimals
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(amount, decimals);
+    const amountWei = ethers.utils.parseUnits(amount, decimals);
 
     console.log(
-      `[Blockchain] Minting ${amount} ${tokenSymbol} to ${recipient}`
+      `[Blockchain] Minting ${amount} ${tokenSymbol} (${amountWei.toString()} wei) to ${recipient}`
     );
 
-    // Use lower gas settings for local network
-    const tx = await tokenContract.mint(recipient, amountWei, {
-      gasLimit: 100000,
-      ...LOCAL_GAS_SETTINGS,
-    });
+    console.log(
+      "[Blockchain] Calling tokenContract.mint() - MetaMask should popup now..."
+    );
+    // Let MetaMask estimate gas automatically
+    const tx = await tokenContract.mint(recipient, amountWei);
     console.log(`[Blockchain] Mint transaction sent: ${tx.hash}`);
 
+    console.log("[Blockchain] Waiting for transaction confirmation...");
     const receipt = await tx.wait();
     console.log(`[Blockchain] Mint confirmed in block ${receipt.blockNumber}`);
 
@@ -90,29 +130,45 @@ export async function depositTokens(
 
     // Get decimals
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(amount, decimals);
+    const amountWei = ethers.utils.parseUnits(amount, decimals);
 
     console.log(`[Blockchain] Depositing ${amount} ${tokenSymbol}`);
 
-    // Step 1: Approve lending pool to spend tokens
+    // Check current allowance
+    const currentAllowance = await tokenContract.allowance(
+      account,
+      CONTRACTS.lendingPool
+    );
     console.log(
-      `[Blockchain] Approving ${CONTRACTS.lendingPool} to spend ${amount} ${tokenSymbol}`
+      `[Blockchain] Current allowance: ${currentAllowance.toString()}`
     );
-    const approveTx = await tokenContract.approve(
-      CONTRACTS.lendingPool,
-      amountWei,
-      { gasLimit: 100000, ...LOCAL_GAS_SETTINGS }
-    );
-    console.log(`[Blockchain] Approval transaction sent: ${approveTx.hash}`);
-    await approveTx.wait();
-    console.log(`[Blockchain] Approval confirmed`);
 
-    // Step 2: Deposit tokens
+    // Only approve if needed
+    if (currentAllowance.lt(amountWei)) {
+      console.log(
+        `[Blockchain] Approval needed. Requesting approval for ${tokenSymbol}...`
+      );
+      // Approve a large amount (1 billion tokens) to avoid multiple approvals
+      // This is large enough for many transactions but won't trigger MetaMask's unlimited warning
+      const largeAmount = ethers.utils.parseUnits("1000000000", decimals); // 1 billion tokens
+      const approveTx = await tokenContract.approve(
+        CONTRACTS.lendingPool,
+        largeAmount
+      );
+      console.log(`[Blockchain] Approval transaction sent: ${approveTx.hash}`);
+      await approveTx.wait();
+      console.log(`[Blockchain] Approval confirmed`);
+    } else {
+      console.log(
+        `[Blockchain] Sufficient allowance already exists, skipping approval`
+      );
+    }
+
+    // Deposit tokens - THIS WILL SHOW A CLEAR CONFIRM BUTTON
     console.log(`[Blockchain] Depositing tokens to lending pool`);
     const depositTx = await lendingPoolContract.deposit(
       tokenAddress,
-      amountWei,
-      { gasLimit: 200000, ...LOCAL_GAS_SETTINGS }
+      amountWei
     );
     console.log(`[Blockchain] Deposit transaction sent: ${depositTx.hash}`);
 
@@ -137,6 +193,7 @@ export async function borrowTokens(
 ) {
   try {
     const signer = await getSigner();
+    const account = await signer.getAddress();
     const collateralTokenAddress = TOKEN_ADDRESSES[collateralTokenSymbol];
     const borrowTokenAddress = TOKEN_ADDRESSES[borrowTokenSymbol];
 
@@ -164,26 +221,41 @@ export async function borrowTokens(
     );
     const borrowDecimals = await borrowTokenContract.decimals();
 
-    const collateralAmountWei = ethers.parseUnits(
+    const collateralAmountWei = ethers.utils.parseUnits(
       collateralAmount,
       collateralDecimals
     );
-    const borrowAmountWei = ethers.parseUnits(borrowAmount, borrowDecimals);
+    const borrowAmountWei = ethers.utils.parseUnits(
+      borrowAmount,
+      borrowDecimals
+    );
 
     console.log(
       `[Blockchain] Borrowing ${borrowAmount} ${borrowTokenSymbol} with ${collateralAmount} ${collateralTokenSymbol} collateral`
     );
 
-    // Step 1: Approve collateral
-    console.log(`[Blockchain] Approving collateral`);
-    const approveTx = await collateralTokenContract.approve(
-      CONTRACTS.lendingPool,
-      collateralAmountWei
+    // Check current allowance
+    const currentAllowance = await collateralTokenContract.allowance(
+      account,
+      CONTRACTS.lendingPool
     );
-    await approveTx.wait();
-    console.log(`[Blockchain] Collateral approved`);
 
-    // Step 2: Borrow
+    // Only approve if needed
+    if (currentAllowance.lt(collateralAmountWei)) {
+      console.log(`[Blockchain] Approving collateral...`);
+      const approveTx = await collateralTokenContract.approve(
+        CONTRACTS.lendingPool,
+        collateralAmountWei
+      );
+      await approveTx.wait();
+      console.log(`[Blockchain] Collateral approved`);
+    } else {
+      console.log(
+        `[Blockchain] Sufficient allowance exists, skipping approval`
+      );
+    }
+
+    // Borrow - THIS WILL SHOW CLEAR CONFIRM BUTTON
     const borrowTx = await lendingPoolContract.borrow(
       collateralTokenAddress,
       collateralAmountWei,
@@ -226,16 +298,16 @@ export async function repayLoan(
     );
 
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(repayAmount, decimals);
+    const amountWei = ethers.utils.parseUnits(repayAmount, decimals);
 
     console.log(
       `[Blockchain] Repaying loan #${loanId} with ${repayAmount} ${tokenSymbol}`
     );
 
-    // Approve tokens
+    // Approve tokens (unlimited approval for better UX)
     const approveTx = await tokenContract.approve(
       CONTRACTS.lendingPool,
-      amountWei
+      ethers.constants.MaxUint256
     );
     await approveTx.wait();
 
@@ -271,7 +343,7 @@ export async function executeFlashLoan(tokenSymbol: string, amount: string) {
     );
 
     const decimals = await tokenContract.decimals();
-    const amountWei = ethers.parseUnits(amount, decimals);
+    const amountWei = ethers.utils.parseUnits(amount, decimals);
 
     console.log(
       `[Blockchain] Executing flash loan for ${amount} ${tokenSymbol}`
@@ -321,7 +393,7 @@ export async function getTokenBalance(
     const balance = await tokenContract.balanceOf(account);
     const decimals = await tokenContract.decimals();
 
-    return ethers.formatUnits(balance, decimals);
+    return ethers.utils.formatUnits(balance, decimals);
   } catch (error: any) {
     console.error("[Blockchain] Balance error:", error);
     return "0";

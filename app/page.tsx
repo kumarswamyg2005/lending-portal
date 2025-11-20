@@ -40,6 +40,386 @@ interface LoanHistoryItem {
   txHash: string;
 }
 
+interface TransactionDetails {
+  type: "supply" | "borrow" | "repay" | "flashloan" | "mint";
+  token: string;
+  amount: number;
+  apy?: number;
+  collateralToken?: string;
+  collateralAmount?: number;
+  fee?: number;
+  estimatedGas?: string;
+}
+
+// Transaction Confirmation Dialog Component
+function TransactionConfirmationDialog({
+  transaction,
+  onConfirm,
+  onCancel,
+  isProcessing,
+}: {
+  transaction: TransactionDetails;
+  onConfirm: () => void;
+  onCancel: () => void;
+  isProcessing: boolean;
+}) {
+  const getActionLabel = () => {
+    switch (transaction.type) {
+      case "supply":
+        return "Supply Assets";
+      case "borrow":
+        return "Borrow Assets";
+      case "repay":
+        return "Repay Loan";
+      case "flashloan":
+        return "Execute Flash Loan";
+      case "mint":
+        return "Mint Test Tokens";
+      default:
+        return "Confirm Transaction";
+    }
+  };
+
+  const getActionColor = () => {
+    switch (transaction.type) {
+      case "supply":
+        return "#4ade80";
+      case "borrow":
+        return "#f87171";
+      case "repay":
+        return "#64c8ff";
+      case "flashloan":
+        return "#fbbf24";
+      case "mint":
+        return "#a78bfa";
+      default:
+        return "#64c8ff";
+    }
+  };
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: "rgba(0, 0, 0, 0.90)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 99999,
+        padding: "1rem",
+        backdropFilter: "blur(4px)",
+      }}
+      onClick={onCancel}
+    >
+      <div
+        style={{
+          background: "linear-gradient(135deg, #1a1f2e 0%, #0f1419 100%)",
+          border: "3px solid rgba(100, 200, 255, 0.5)",
+          borderRadius: "1rem",
+          padding: "2rem",
+          maxWidth: "500px",
+          width: "100%",
+          boxShadow:
+            "0 25px 80px rgba(0, 0, 0, 0.8), 0 0 100px rgba(100, 200, 255, 0.2)",
+          animation: "slideIn 0.3s ease-out",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+          <div
+            style={{
+              width: "60px",
+              height: "60px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${getActionColor()}33 0%, ${getActionColor()}11 100%)`,
+              border: `2px solid ${getActionColor()}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 1rem",
+              fontSize: "1.5rem",
+            }}
+          >
+            {transaction.type === "supply" && "📥"}
+            {transaction.type === "borrow" && "💰"}
+            {transaction.type === "repay" && "✅"}
+            {transaction.type === "flashloan" && "⚡"}
+            {transaction.type === "mint" && "🪙"}
+          </div>
+          <h2
+            style={{
+              color: getActionColor(),
+              fontSize: "1.5rem",
+              marginBottom: "0.5rem",
+              fontWeight: 700,
+            }}
+          >
+            {getActionLabel()}
+          </h2>
+          <p style={{ color: "#999", fontSize: "0.875rem" }}>
+            Please review and confirm this transaction
+          </p>
+        </div>
+
+        {/* Transaction Details */}
+        <div
+          style={{
+            background: "rgba(15, 20, 25, 0.8)",
+            border: "1px solid rgba(100, 200, 255, 0.2)",
+            borderRadius: "0.75rem",
+            padding: "1.5rem",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
+            {/* Amount */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ color: "#999", fontSize: "0.875rem" }}>
+                Amount
+              </span>
+              <span
+                style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600 }}
+              >
+                {transaction.amount.toLocaleString()} {transaction.token}
+              </span>
+            </div>
+
+            {/* APY (if applicable) */}
+            {transaction.apy !== undefined && transaction.apy > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ color: "#999", fontSize: "0.875rem" }}>
+                  {transaction.type === "supply" ? "Supply APY" : "Borrow APY"}
+                </span>
+                <span
+                  style={{
+                    color:
+                      transaction.type === "supply" ? "#4ade80" : "#f87171",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  {transaction.apy}%
+                </span>
+              </div>
+            )}
+
+            {/* Collateral (for borrow) */}
+            {transaction.collateralToken && transaction.collateralAmount && (
+              <>
+                <div
+                  style={{
+                    height: "1px",
+                    background: "rgba(100, 200, 255, 0.1)",
+                    margin: "0.5rem 0",
+                  }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ color: "#999", fontSize: "0.875rem" }}>
+                    Collateral
+                  </span>
+                  <span
+                    style={{
+                      color: "#64c8ff",
+                      fontSize: "1rem",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {transaction.collateralAmount.toLocaleString()}{" "}
+                    {transaction.collateralToken}
+                  </span>
+                </div>
+              </>
+            )}
+
+            {/* Fee (for flash loans) */}
+            {transaction.fee !== undefined && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ color: "#999", fontSize: "0.875rem" }}>
+                  Flash Loan Fee
+                </span>
+                <span
+                  style={{
+                    color: "#fbbf24",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  {transaction.fee} {transaction.token}
+                </span>
+              </div>
+            )}
+
+            {/* Estimated Gas */}
+            <div
+              style={{
+                height: "1px",
+                background: "rgba(100, 200, 255, 0.1)",
+                margin: "0.5rem 0",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ color: "#999", fontSize: "0.875rem" }}>
+                Estimated Gas Fee
+              </span>
+              <span style={{ color: "#999", fontSize: "0.875rem" }}>
+                {transaction.estimatedGas || "~0.002 ETH"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Important Notice */}
+        <div
+          style={{
+            background: "rgba(100, 200, 255, 0.05)",
+            border: "1px solid rgba(100, 200, 255, 0.2)",
+            borderRadius: "0.5rem",
+            padding: "1rem",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <p
+            style={{
+              color: "#64c8ff",
+              fontSize: "0.75rem",
+              margin: 0,
+              lineHeight: "1.5",
+            }}
+          >
+            ⓘ This transaction will be submitted to the blockchain. You will
+            need to confirm it in MetaMask.
+            {transaction.type === "supply" &&
+              " First-time users may need to approve token spending (1 confirmation), then deposit (1 confirmation)."}
+            {transaction.type === "borrow" &&
+              " First-time users may need to approve collateral (1 confirmation), then borrow (1 confirmation)."}
+            {transaction.type === "repay" &&
+              " This will reduce your outstanding debt."}
+            {transaction.type === "flashloan" &&
+              " Flash loan will be executed atomically."}
+            {transaction.type === "mint" &&
+              " Test tokens will be minted to your wallet address."}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <button
+            onClick={onCancel}
+            disabled={isProcessing}
+            style={{
+              flex: 1,
+              padding: "1rem",
+              background: "rgba(255, 255, 255, 0.05)",
+              color: "#999",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              borderRadius: "0.5rem",
+              cursor: isProcessing ? "not-allowed" : "pointer",
+              fontWeight: 600,
+              fontSize: "1rem",
+              transition: "all 0.3s ease",
+              opacity: isProcessing ? 0.5 : 1,
+            }}
+            onMouseEnter={(e) => {
+              if (!isProcessing) {
+                (e.target as HTMLButtonElement).style.background =
+                  "rgba(255, 255, 255, 0.1)";
+                (e.target as HTMLButtonElement).style.color = "#fff";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isProcessing) {
+                (e.target as HTMLButtonElement).style.background =
+                  "rgba(255, 255, 255, 0.05)";
+                (e.target as HTMLButtonElement).style.color = "#999";
+              }
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={isProcessing}
+            style={{
+              flex: 1,
+              padding: "1rem",
+              background: isProcessing
+                ? "#555"
+                : `linear-gradient(135deg, ${getActionColor()} 0%, ${getActionColor()}dd 100%)`,
+              color: isProcessing ? "#999" : "#0f1419",
+              border: "none",
+              borderRadius: "0.5rem",
+              cursor: isProcessing ? "not-allowed" : "pointer",
+              fontWeight: 700,
+              fontSize: "1rem",
+              transition: "all 0.3s ease",
+              boxShadow: isProcessing
+                ? "none"
+                : `0 4px 12px ${getActionColor()}44`,
+            }}
+            onMouseEnter={(e) => {
+              if (!isProcessing) {
+                (e.target as HTMLButtonElement).style.transform =
+                  "translateY(-2px)";
+                (
+                  e.target as HTMLButtonElement
+                ).style.boxShadow = `0 6px 20px ${getActionColor()}66`;
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isProcessing) {
+                (e.target as HTMLButtonElement).style.transform =
+                  "translateY(0)";
+                (
+                  e.target as HTMLButtonElement
+                ).style.boxShadow = `0 4px 12px ${getActionColor()}44`;
+              }
+            }}
+          >
+            {isProcessing ? "Processing..." : "Confirm Transaction"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const executeTransaction = async (
   type: string,
   amount: number,
@@ -135,8 +515,24 @@ const executeTransaction = async (
 
     setIsLoading(false);
     console.log("[v0] Transaction successful:", txHash);
+
+    // Show success message with transaction details
+    const actionWord =
+      type === "supply"
+        ? "Deposited"
+        : type === "borrow"
+        ? "Borrowed"
+        : type === "repay"
+        ? "Repaid"
+        : type === "flashloan"
+        ? "Flash Loan"
+        : "Completed";
+
     alert(
-      `Transaction successful!\n\nTx Hash: ${txHash}\n\nYou can view this transaction in MetaMask!`
+      `✅ Success! ${actionWord} ${amount} ${token}\n\n` +
+        `Transaction Hash:\n${txHash}\n\n` +
+        `You earned +${reputationGain} reputation points!\n\n` +
+        `View this transaction in MetaMask's activity tab.`
     );
     return true;
   } catch (error: any) {
@@ -149,9 +545,45 @@ const executeTransaction = async (
       return false;
     }
 
-    // Handle other errors
-    const errorMessage = error.reason || error.message || "Unknown error";
-    alert("Transaction failed: " + errorMessage);
+    // Extract meaningful error message
+    let errorMessage = "Unknown error";
+
+    if (error.message) {
+      // Check for common error patterns
+      if (error.message.includes("insufficient funds")) {
+        errorMessage =
+          "Insufficient ETH for gas fees. You need test ETH to pay for transactions.";
+      } else if (error.message.includes("user rejected")) {
+        errorMessage = "Transaction cancelled by user";
+        return false;
+      } else if (error.message.includes("Token not supported")) {
+        errorMessage = "This token is not supported by the lending pool";
+      } else if (error.message.includes("Amount must be > 0")) {
+        errorMessage = "Amount must be greater than 0";
+      } else if (error.message.includes("Insufficient balance")) {
+        errorMessage =
+          "You don't have enough tokens to complete this transaction";
+      } else if (error.message.includes("Exceeds LTV limit")) {
+        errorMessage =
+          "Borrow amount exceeds the allowed loan-to-value ratio (max 75%)";
+      } else if (error.message.includes("Insufficient liquidity")) {
+        errorMessage = "Not enough liquidity in the pool for this withdrawal";
+      } else if (
+        error.message.includes("execution reverted") ||
+        error.message.includes("revert")
+      ) {
+        errorMessage =
+          "Smart contract rejected the transaction. Please check: \n• You have enough tokens\n• Token is approved\n• You meet all requirements";
+      } else {
+        errorMessage = error.message;
+      }
+    } else if (error.reason) {
+      errorMessage = error.reason;
+    } else if (error.data?.message) {
+      errorMessage = error.data.message;
+    }
+
+    alert("❌ Transaction Failed\n\n" + errorMessage);
     return false;
   }
 };
@@ -505,6 +937,11 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState<Page>("dashboard");
   const [markets, setMarkets] = useState<Market[]>(DEMO_MARKETS);
 
+  // Confirmation dialog state
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [pendingTransaction, setPendingTransaction] =
+    useState<TransactionDetails | null>(null);
+
   const connectWallet = async () => {
     if (typeof window === "undefined") return;
 
@@ -627,7 +1064,10 @@ export default function Page() {
     collateralToken?: string,
     collateralAmount?: number
   ) => {
-    return await executeTransaction(
+    // Go straight to MetaMask - no custom dialog
+    console.log(`[Transaction] Executing ${type} for ${amount} ${token}`);
+
+    const success = await executeTransaction(
       type,
       amount,
       token,
@@ -641,6 +1081,148 @@ export default function Page() {
       collateralToken,
       collateralAmount
     );
+  };
+
+  const confirmTransaction = async () => {
+    if (!pendingTransaction) return;
+
+    // Handle mint separately
+    if (pendingTransaction.type === "mint") {
+      await confirmMint();
+      return;
+    }
+
+    setShowConfirmation(false);
+
+    const success = await executeTransaction(
+      pendingTransaction.type,
+      pendingTransaction.amount,
+      pendingTransaction.token,
+      pendingTransaction.apy || 0,
+      account,
+      setIsLoading,
+      setLoanHistory,
+      loanHistory,
+      setReputation,
+      reputation,
+      pendingTransaction.collateralToken,
+      pendingTransaction.collateralAmount
+    );
+
+    if (success) {
+      setPendingTransaction(null);
+    }
+  };
+
+  const cancelTransaction = () => {
+    setShowConfirmation(false);
+    setPendingTransaction(null);
+  };
+
+  const handleMintTokens = async (tokenSymbol: string, amount = "1000") => {
+    console.log(
+      `[Mint] handleMintTokens called - Token: ${tokenSymbol}, Amount: ${amount}`
+    );
+
+    if (!account) {
+      alert("Please connect your wallet first");
+      return;
+    }
+
+    // Go straight to MetaMask - no custom dialog
+    console.log("[Mint] Opening MetaMask for confirmation...");
+    setIsLoading(true);
+
+    try {
+      const txHash = await mintTestTokens(tokenSymbol, amount, account);
+      console.log("[Mint] Transaction successful! Hash:", txHash);
+      alert(
+        `✅ Success! Minted ${amount} ${tokenSymbol}\n\n` +
+          `Transaction Hash:\n${txHash}\n\n` +
+          `The tokens should appear in your wallet shortly.`
+      );
+    } catch (error: any) {
+      console.error("[Mint] Transaction failed:", error);
+      if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+        alert(
+          "❌ Transaction Cancelled\n\nYou rejected the transaction in MetaMask."
+        );
+      } else if (error.message?.includes("insufficient funds")) {
+        alert(
+          "❌ Insufficient Funds\n\nYou don't have enough ETH to pay for gas fees."
+        );
+      } else {
+        alert("❌ Minting Failed\n\n" + (error.message || "Unknown error"));
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const confirmMint = async () => {
+    if (!pendingTransaction || pendingTransaction.type !== "mint") {
+      console.error("[Mint] Invalid state - no pending mint transaction");
+      return;
+    }
+
+    if (!account) {
+      alert("Please connect your wallet first");
+      return;
+    }
+
+    console.log("[Mint] User clicked Confirm Transaction button");
+    console.log("[Mint] Pending transaction:", pendingTransaction);
+    setShowConfirmation(false);
+    setIsLoading(true);
+
+    try {
+      console.log(
+        `[Mint] Minting ${pendingTransaction.amount} ${pendingTransaction.token} test tokens...`
+      );
+      console.log("[Mint] Opening MetaMask for confirmation...");
+
+      const txHash = await mintTestTokens(
+        pendingTransaction.token,
+        pendingTransaction.amount.toString(),
+        account
+      );
+
+      console.log("[Mint] Transaction successful! Hash:", txHash);
+      alert(
+        `✅ Success! Minted ${pendingTransaction.amount} ${pendingTransaction.token}\n\n` +
+          `Transaction Hash:\n${txHash}\n\n` +
+          `The tokens should appear in your wallet shortly.`
+      );
+
+      setPendingTransaction(null);
+    } catch (error: any) {
+      console.error("[Mint] Transaction failed:", error);
+      console.error("[Mint] Error details:", {
+        code: error.code,
+        message: error.message,
+        reason: error.reason,
+      });
+
+      // Better error handling
+      if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+        alert(
+          "❌ Transaction Cancelled\n\nYou rejected the transaction in MetaMask."
+        );
+      } else if (error.message?.includes("insufficient funds")) {
+        alert(
+          "❌ Insufficient Funds\n\nYou don't have enough ETH to pay for gas fees."
+        );
+      } else if (error.message?.includes("user rejected")) {
+        alert(
+          "❌ Transaction Rejected\n\nYou cancelled the transaction in MetaMask."
+        );
+      } else {
+        alert("❌ Minting Failed\n\n" + (error.message || "Unknown error"));
+      }
+    } finally {
+      setIsLoading(false);
+      console.log("[Mint] Process complete, loading state cleared");
+    }
   };
 
   return (
@@ -785,6 +1367,8 @@ export default function Page() {
               markets={markets}
               reputation={reputation}
               account={account}
+              onMintTokens={handleMintTokens}
+              isMinting={isLoading}
             />
           )}
           {currentPage === "supply" && (
@@ -820,6 +1404,20 @@ export default function Page() {
           )}
         </div>
       )}
+
+      {/* Transaction Confirmation Dialog */}
+      {showConfirmation && pendingTransaction && (
+        <TransactionConfirmationDialog
+          transaction={pendingTransaction}
+          onConfirm={
+            pendingTransaction.type === "mint"
+              ? confirmMint
+              : confirmTransaction
+          }
+          onCancel={cancelTransaction}
+          isProcessing={isLoading}
+        />
+      )}
     </div>
   );
 }
@@ -829,32 +1427,18 @@ function DashboardContent({
   markets,
   reputation,
   account,
+  onMintTokens,
+  isMinting,
 }: {
   markets: Market[];
   reputation: number;
   account: string | null;
+  onMintTokens: (token: string, amount: string) => void;
+  isMinting: boolean;
 }) {
-  const [minting, setMinting] = useState(false);
-
-  const handleMintTokens = async (tokenSymbol: string) => {
-    if (!account) {
-      alert("Please connect your wallet first");
-      return;
-    }
-
-    setMinting(true);
-    try {
-      console.log(`[v0] Minting 1000 ${tokenSymbol} test tokens...`);
-      const txHash = await mintTestTokens(tokenSymbol, "1000", account);
-      alert(
-        `Successfully minted 1000 ${tokenSymbol}!\n\nTx Hash: ${txHash}\n\nCheck your MetaMask!`
-      );
-    } catch (error: any) {
-      console.error("[v0] Mint error:", error);
-      alert("Failed to mint tokens: " + (error.message || "Unknown error"));
-    } finally {
-      setMinting(false);
-    }
+  const handleMintTokens = (tokenSymbol: string) => {
+    console.log(`[DashboardContent] Mint button clicked for ${tokenSymbol}`);
+    onMintTokens(tokenSymbol, "1000");
   };
 
   return (
@@ -892,21 +1476,21 @@ function DashboardContent({
             <button
               key={token}
               onClick={() => handleMintTokens(token)}
-              disabled={minting}
+              disabled={isMinting}
               style={{
                 padding: "0.75rem 1.5rem",
-                background: minting
+                background: isMinting
                   ? "#555"
                   : "linear-gradient(135deg, #64c8ff 0%, #4db8e8 100%)",
                 color: "#0f1419",
                 border: "none",
                 borderRadius: "0.5rem",
-                cursor: minting ? "not-allowed" : "pointer",
+                cursor: isMinting ? "not-allowed" : "pointer",
                 fontWeight: 600,
                 fontSize: "0.875rem",
               }}
             >
-              {minting ? "Minting..." : `Mint 1000 ${token}`}
+              {isMinting ? "Processing..." : `Mint 1000 ${token}`}
             </button>
           ))}
         </div>

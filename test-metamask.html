@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>MetaMask Connection Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0a0e14;
+      color: #fff;
+    }
+
+    .test-section {
+      background: #1a1f2e;
+      border: 1px solid #64c8ff;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    button {
+      background: #64c8ff;
+      color: #0f1419;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      margin: 10px 10px 10px 0;
+    }
+
+    button:hover {
+      background: #4db8e8;
+    }
+
+    .success {
+      color: #4ade80;
+    }
+
+    .error {
+      color: #f87171;
+    }
+
+    .info {
+      color: #64c8ff;
+    }
+
+    pre {
+      background: #0a0e14;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid #333;
+    }
+
+    #logs {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🦊 MetaMask Connection Test</h1>
+
+  <div class="test-section">
+    <h2>Step 1: Check MetaMask Installation</h2>
+    <button onclick="checkMetaMask()">Check MetaMask</button>
+    <div id="metamask-status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Step 2: Connect Wallet</h2>
+    <button onclick="connectWallet()">Connect Wallet</button>
+    <div id="connection-status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Step 3: Test Transaction</h2>
+    <button onclick="testTransaction()">Send Test Transaction</button>
+    <div id="transaction-status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Console Logs:</h2>
+    <button onclick="clearLogs()">Clear Logs</button>
+    <pre id="logs"></pre>
+  </div>
+
+  <script>
+    const logsElement = document.getElementById('logs');
+
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const color = type === 'success' ? '#4ade80' : type === 'error' ? '#f87171' : '#64c8ff';
+      logsElement.innerHTML += `<div style="color: ${color}">[${timestamp}] ${message}</div>`;
+      logsElement.scrollTop = logsElement.scrollHeight;
+      console.log(`[${timestamp}] ${message}`);
+    }
+
+    function clearLogs() {
+      logsElement.innerHTML = '';
+    }
+
+    async function checkMetaMask() {
+      log('Checking for MetaMask...');
+      const statusDiv = document.getElementById('metamask-status');
+
+      if (typeof window.ethereum !== 'undefined') {
+        statusDiv.innerHTML = '<p class="success">✅ MetaMask is installed!</p>';
+        log('✅ MetaMask detected', 'success');
+
+        // Get version
+        try {
+          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+          const chainIdDecimal = parseInt(chainId, 16);
+          statusDiv.innerHTML += `<p class="info">📡 Current Chain ID: ${chainId} (${chainIdDecimal})</p>`;
+          log(`Chain ID: ${chainId} (${chainIdDecimal})`);
+
+          if (chainIdDecimal === 31337) {
+            statusDiv.innerHTML += '<p class="success">✅ Connected to Localhost/Hardhat network</p>';
+            log('✅ Correct network (Localhost)', 'success');
+          } else {
+            statusDiv.innerHTML += '<p class="error">⚠️ Not on Localhost (31337). You are on chain ' + chainIdDecimal + '</p>';
+            log('⚠️ Wrong network!', 'error');
+          }
+        } catch (error) {
+          log('Error getting chain ID: ' + error.message, 'error');
+        }
+
+        // Check if already connected
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts.length > 0) {
+            statusDiv.innerHTML += `<p class="success">✅ Already connected: ${accounts[0]}</p>`;
+            log(`✅ Already connected: ${accounts[0]}`, 'success');
+          } else {
+            statusDiv.innerHTML += '<p class="info">ℹ️ Not connected yet. Click "Connect Wallet"</p>';
+            log('Not connected yet');
+          }
+        } catch (error) {
+          log('Error checking accounts: ' + error.message, 'error');
+        }
+      } else {
+        statusDiv.innerHTML = '<p class="error">❌ MetaMask is NOT installed</p><p>Install from: <a href="https://metamask.io" target="_blank">https://metamask.io</a></p>';
+        log('❌ MetaMask NOT found', 'error');
+      }
+    }
+
+    async function connectWallet() {
+      log('Attempting to connect wallet...');
+      const statusDiv = document.getElementById('connection-status');
+
+      if (typeof window.ethereum === 'undefined') {
+        statusDiv.innerHTML = '<p class="error">❌ MetaMask not installed</p>';
+        log('❌ MetaMask not installed', 'error');
+        return;
+      }
+
+      try {
+        log('Requesting accounts from MetaMask...');
+        statusDiv.innerHTML = '<p class="info">🦊 Opening MetaMask popup...</p>';
+
+        const accounts = await window.ethereum.request({
+          method: 'eth_requestAccounts'
+        });
+
+        if (accounts && accounts.length > 0) {
+          statusDiv.innerHTML = `<p class="success">✅ Connected successfully!</p><p class="info">Account: ${accounts[0]}</p>`;
+          log(`✅ Connected: ${accounts[0]}`, 'success');
+
+          // Get balance
+          const balance = await window.ethereum.request({
+            method: 'eth_getBalance',
+            params: [accounts[0], 'latest']
+          });
+          const balanceInEth = parseInt(balance, 16) / 1e18;
+          statusDiv.innerHTML += `<p class="info">💰 Balance: ${balanceInEth.toFixed(4)} ETH</p>`;
+          log(`Balance: ${balanceInEth.toFixed(4)} ETH`);
+        } else {
+          statusDiv.innerHTML = '<p class="error">❌ No accounts returned</p>';
+          log('❌ No accounts returned', 'error');
+        }
+      } catch (error) {
+        if (error.code === 4001) {
+          statusDiv.innerHTML = '<p class="error">❌ Connection rejected by user</p>';
+          log('❌ User rejected connection', 'error');
+        } else {
+          statusDiv.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+          log(`❌ Error: ${error.message}`, 'error');
+        }
+      }
+    }
+
+    async function testTransaction() {
+      log('Testing transaction...');
+      const statusDiv = document.getElementById('transaction-status');
+
+      if (typeof window.ethereum === 'undefined') {
+        statusDiv.innerHTML = '<p class="error">❌ MetaMask not installed</p>';
+        log('❌ MetaMask not installed', 'error');
+        return;
+      }
+
+      try {
+        // Get current account
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+
+        if (accounts.length === 0) {
+          statusDiv.innerHTML = '<p class="error">❌ Not connected. Click "Connect Wallet" first</p>';
+          log('❌ Not connected', 'error');
+          return;
+        }
+
+        log('Preparing test transaction...');
+        statusDiv.innerHTML = '<p class="info">📝 Preparing transaction...</p>';
+
+        // Send a simple transaction (0.000001 ETH to yourself)
+        log('Sending transaction request to MetaMask...');
+        statusDiv.innerHTML = '<p class="info">🦊 Opening MetaMask for confirmation...</p>';
+
+        const txHash = await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: accounts[0],
+            to: accounts[0],
+            value: '0x5AF3107A4000', // 0.0001 ETH in hex
+            gas: '0x5208', // 21000 gas
+          }]
+        });
+
+        statusDiv.innerHTML = `<p class="success">✅ Transaction sent!</p><p class="info">TX Hash: ${txHash}</p>`;
+        log(`✅ Transaction sent: ${txHash}`, 'success');
+
+        // Wait for confirmation
+        statusDiv.innerHTML += '<p class="info">⏳ Waiting for confirmation...</p>';
+        log('Waiting for confirmation...');
+
+        // Poll for receipt
+        let receipt = null;
+        for (let i = 0; i < 30; i++) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          try {
+            receipt = await window.ethereum.request({
+              method: 'eth_getTransactionReceipt',
+              params: [txHash]
+            });
+            if (receipt) break;
+          } catch (e) { }
+        }
+
+        if (receipt) {
+          statusDiv.innerHTML += '<p class="success">✅ Transaction confirmed!</p>';
+          log('✅ Transaction confirmed', 'success');
+        } else {
+          statusDiv.innerHTML += '<p class="info">⏳ Still pending...</p>';
+          log('Transaction still pending');
+        }
+
+      } catch (error) {
+        if (error.code === 4001) {
+          statusDiv.innerHTML = '<p class="error">❌ Transaction rejected by user</p>';
+          log('❌ User rejected transaction', 'error');
+        } else {
+          statusDiv.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+          log(`❌ Error: ${error.message}`, 'error');
+        }
+      }
+    }
+
+    // Auto-check on load
+    window.addEventListener('load', () => {
+      log('Page loaded. Ready to test MetaMask connection.', 'success');
+      checkMetaMask();
+    });
+  </script>
+</body>
+
+</html>

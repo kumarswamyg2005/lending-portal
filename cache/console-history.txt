@@ -1,0 +1,9 @@
+10000000000000000000000
+1000000000000000000
+100
+"
+console.log('Mint function interface:', token.interface.getFunction('mint'));
+const token = new ethers.Contract('0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e', tokenAbi, provider);
+const tokenAbi = ['function mint(address to, uint256 amount)'];
+const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+const ethers = require('ethers');
