@@ -953,11 +953,6 @@ export default function Page() {
         alert(
           "MetaMask is not installed. Please install MetaMask extension from https://metamask.io/"
         );
-        // Using mock wallet for demo
-        console.log("[v0] Using mock wallet for demo");
-        setAccount("0xca5b3038a012294065c729f61e4c1618dbadf6bd");
-        setIsConnected(true);
-        setReputation(120);
         return;
       }
 
