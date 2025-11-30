@@ -1,15 +1,69 @@
 // Contract addresses
-// To use local Hardhat: Make sure deployment.json exists and run: npm run dev
-// To use a testnet: Update these addresses with your deployed contract addresses
-import deployment from "../deployment.json";
+// Supports both localhost and Sepolia testnet
+
+// Network configurations
+export const NETWORKS = {
+  localhost: {
+    chainId: 31337,
+    name: "Localhost",
+    rpcUrl: "http://127.0.0.1:8545",
+  },
+  sepolia: {
+    chainId: 11155111,
+    name: "Sepolia Testnet",
+    rpcUrl:
+      process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || "https://rpc.sepolia.org",
+  },
+};
+
+// Get contract addresses based on current network
+export function getContractAddresses(chainId: number) {
+  // Sepolia testnet
+  if (chainId === 11155111) {
+    return {
+      lendingPool: process.env.NEXT_PUBLIC_SEPOLIA_LENDING_POOL || "",
+      dai: process.env.NEXT_PUBLIC_SEPOLIA_DAI || "",
+      usdc: process.env.NEXT_PUBLIC_SEPOLIA_USDC || "",
+      weth: process.env.NEXT_PUBLIC_SEPOLIA_WETH || "",
+    };
+  }
+
+  // Localhost / Hardhat (default)
+  try {
+    const deployment = require("../deployment.json");
+    return {
+      lendingPool:
+        deployment.lendingPool || deployment.contracts?.lendingPool || "",
+      dai: deployment.tokens?.DAI || deployment.contracts?.tokens?.DAI || "",
+      usdc: deployment.tokens?.USDC || deployment.contracts?.tokens?.USDC || "",
+      weth: deployment.tokens?.WETH || deployment.contracts?.tokens?.WETH || "",
+    };
+  } catch (error) {
+    console.error("Error loading deployment.json:", error);
+    return {
+      lendingPool: "",
+      dai: "",
+      usdc: "",
+      weth: "",
+    };
+  }
+}
+
+// Legacy export for backward compatibility
+let deployment: any = {};
+try {
+  deployment = require("../deployment.json");
+} catch (error) {
+  console.warn("deployment.json not found, using environment variables");
+}
 
 export const CONTRACTS = {
-  dai: deployment.tokens.DAI,
-  usdc: deployment.tokens.USDC,
-  weth: deployment.tokens.WETH,
-  lendingPool: deployment.lendingPool,
-  interestModel: deployment.interestModel,
-  flashLoanReceiver: deployment.flashLoanReceiver,
+  dai: deployment.tokens?.DAI || "",
+  usdc: deployment.tokens?.USDC || "",
+  weth: deployment.tokens?.WETH || "",
+  lendingPool: deployment.lendingPool || "",
+  interestModel: deployment.interestModel || "",
+  flashLoanReceiver: deployment.flashLoanReceiver || "",
 };
 
 // Contract ABIs

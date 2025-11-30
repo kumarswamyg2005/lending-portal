@@ -4,6 +4,8 @@ import {
   LENDING_POOL_ABI,
   TOKEN_ABI,
   TOKEN_ADDRESSES,
+  getContractAddresses,
+  NETWORKS,
 } from "./contracts";
 
 // Get provider from MetaMask (uses whatever network MetaMask is connected to)
@@ -37,7 +39,34 @@ export async function getSigner() {
   return signer;
 }
 
-// Mint test tokens (only works with mock tokens on local network)
+// Get current network info
+export async function getNetworkInfo() {
+  const provider = getProvider();
+  const network = await provider.getNetwork();
+  return {
+    chainId: network.chainId,
+    name:
+      network.chainId === 11155111
+        ? "Sepolia"
+        : network.chainId === 31337
+        ? "Localhost"
+        : "Unknown",
+  };
+}
+
+// Get token addresses for current network
+export async function getTokenAddressesForNetwork() {
+  const network = await getNetworkInfo();
+  const addresses = getContractAddresses(network.chainId);
+
+  return {
+    DAI: addresses.dai,
+    USDC: addresses.usdc,
+    WETH: addresses.weth,
+  };
+}
+
+// Mint test tokens (works on both localhost and Sepolia with mock tokens)
 export async function mintTestTokens(
   tokenSymbol: string,
   amount: string,
@@ -53,7 +82,11 @@ export async function mintTestTokens(
     console.log("[Blockchain] Getting signer...");
     const signer = await getSigner();
     const provider = getProvider();
+    const network = await getNetworkInfo();
 
+    console.log(
+      `[Blockchain] Connected to: ${network.name} (Chain ID: ${network.chainId})`
+    );
     console.log("[Blockchain] Signer obtained, checking balance...");
 
     // Check ETH balance first
@@ -65,17 +98,24 @@ export async function mintTestTokens(
     );
 
     if (balance.isZero()) {
-      console.warn(
-        `⚠️ Warning: No TEST ETH in account. Transaction may fail without gas funds.`
-      );
-      // Don't throw - let the user try anyway. MetaMask will handle the error.
+      const message =
+        network.chainId === 11155111
+          ? "⚠️ No Sepolia ETH! Get free test ETH from: https://sepoliafaucet.com/"
+          : "⚠️ No ETH in account. Transaction may fail without gas funds.";
+      console.warn(message);
+      alert(message);
+      return null;
     }
 
-    const tokenAddress = TOKEN_ADDRESSES[tokenSymbol];
+    // Get token addresses for current network
+    const tokenAddresses = await getTokenAddressesForNetwork();
+    const tokenAddress =
+      tokenAddresses[tokenSymbol as keyof typeof tokenAddresses];
+
     console.log(`[Blockchain] Token address for ${tokenSymbol}:`, tokenAddress);
 
     if (!tokenAddress) {
-      throw new Error(`Token ${tokenSymbol} not found`);
+      throw new Error(`Token ${tokenSymbol} not found on ${network.name}`);
     }
 
     console.log("[Blockchain] Creating token contract...");
