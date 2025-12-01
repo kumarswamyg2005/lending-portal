@@ -1,3 +1,4 @@
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
 Started HTTP and WebSocket JSON-RPC server at http://127.0.0.1:8545/
 
 Accounts
@@ -68,4 +69,1741 @@ Private Key: 0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e
 
 WARNING: These accounts, and their private keys, are publicly known.
 Any funds sent to them on Mainnet or any other live network WILL BE LOST.
+
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_chainId (3)[0m
+[32meth_accounts[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[32meth_maxPriorityFeePerGas[0m
+[32meth_sendTransaction[0m
+  Transaction: 0x8a32defd06297f4b17d0d1fefc8810263cef02390a20627f477318eb9b79dbb6
+  From:        0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:          0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  Value:       1000. ETH
+  Gas used:    21000 of 21001
+  Block #1:    0xff92028bc8ae1c739aaa2b4be0673410acb6b8ea737a8d37cf14deb4f31d586b
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_getBalance[0m
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:        0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:          0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+[32meth_blockNumber[0m
+[32meth_blockNumber (2)[0m
+[32meth_getBlockByNumber[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_chainId (3)[0m
+[32meth_accounts[0m
+[32meth_accounts (2)[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract deployment: MockERC20
+  Contract address:    0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+  Transaction:         0xf07d675f26e9f567f3495e1da5bdb0ddf5f847c8b2aec100a5f6ac652cabbe0a
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            625322 of 625322
+  Block #2:            0x049993c7ecfddec83702bb0754897d6c42c6128a6f3c57615e428b19c29e35f0
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract deployment: MockERC20
+  Contract address:    0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0
+  Transaction:         0x31cc3ff210224698f4b7f211bd4e7ba306abe9d0fb49a8eb7420a439d4b3a840
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            625262 of 625262
+  Block #3:            0xb9fa596cbad4855b67466da2fee0fc6903e686f44262ecf597d5df63f07b0a81
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract deployment: MockERC20
+  Contract address:    0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+  Transaction:         0x5abd6a0e6beb615188b8d0682715335889e3a7c30e1a9e5af3a22a8f6c5a318d
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            625322 of 625322
+  Block #4:            0x3881affb9af9dbc8170c71874d9990a8b9d718e6c9861f1511e12f2d33daa5c2
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract deployment: VariableInterestRateModel
+  Contract address:    0xdc64a140aa3e981100a9beca4e685f962f0cf6c9
+  Transaction:         0xcae492bbd9651984ffcbed042307d23f43bbf779ca015fbd389ffab3eab52c5e
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            461370 of 461370
+  Block #5:            0x04ae161c7a6335dd807e067ad73ae3e4e5685b1b92266c87e888bcaef65e75fa
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract deployment: LendingPool
+  Contract address:    0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Transaction:         0xc3ef91bc47d58a67ee17fadba39c4b51f5142ad44c5b70d61837502e7e8f5107
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            1674747 of 1674747
+  Block #6:            0x440f2c57db571f6c616f8c018f59782a116567d322ad9a33ecea96f5fc871b1d
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       VariableInterestRateModel#setLendingPool
+  Transaction:         0xfd34d55c35901dcb6fd8f4e4dc06fec77b0285fcee620b929f6876df4dfde5ca
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xdc64a140aa3e981100a9beca4e685f962f0cf6c9
+  Value:               0 ETH
+  Gas used:            46009 of 46009
+  Block #7:            0x5b57014d760edc7812398dc136bef937d14041ea5be3c5d8894e46f0b80a06b9
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract deployment: FlashLoanReceiver
+  Contract address:    0xa513e6e4b8f2a923d98304ec87f64353c4d5c853
+  Transaction:         0x4aa83adad9d4d19f5638b34d59361b038ed09581c0434e6d8994c891fba0f04f
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            314206 of 314206
+  Block #8:            0x69ebe2b858e2f1c6d5e4f31fe6e3a5b032dc4202affb32a81a056a406e6007a3
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       LendingPool#addMarket
+  Transaction:         0xda778585d6b6218e5299d5053d99a24c7f3723078fa9637e5ec678688f9074c2
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+  Gas used:            117382 of 117382
+  Block #9:            0x76b34ae9a355861983b1c2ab067757dd68b924b06211a20c0983c44b42797c6f
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       LendingPool#addMarket
+  Transaction:         0xa958e3d9c9bb7f042e748b7ce15d21ce44f900cff47d92027b92a14b5b4a4f35
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+  Gas used:            117382 of 117382
+  Block #10:           0xe27bcf1340db2c5f0fa35c6b63dc88d1bd21f59ec2901f48f43343fd51103782
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       LendingPool#addMarket
+  Transaction:         0x36b1b2b2a73a002773032ff0b9b5bd1ed12e30ca3ab04e8a7b7056c5c223ad0e
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+  Gas used:            117382 of 117382
+  Block #11:           0x488bd1e945dd799c7c184726be2a63a6a57561da5dcf7cf904e9b69c9616040d
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+[32meth_blockNumber[0m
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[32meth_estimateGas[0m
+[32meth_getCode[0m
+[32meth_getCode (2)[0m
+[32meth_gasPrice[0m
+[32meth_blockNumber[0m
+[32meth_accounts[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[32meth_getBlockByNumber[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_getStorageAt[0m
+[32meth_getStorageAt (2)[0m
+[32meth_getTransactionCount[0m
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+
+[32meth_sendRawTransaction[0m
+  Contract call:       MockERC20#mint
+  Transaction:         0xf3518330f5a74a4f72adb4e86e3cde941b9d8e2f7716a305c2e32614e3d328d8
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+  Value:               0 ETH
+  Gas used:            68544 of 68544
+  Block #12:           0x17f9b36a57e13b7f45fdc2c99413e911699e42c5f76490c51f39557355d62c92
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_getTransactionReceipt[0m
+[32meth_blockNumber[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#allowance
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[32meth_estimateGas[0m
+[32meth_getCode[0m
+[32meth_getCode (2)[0m
+[32meth_gasPrice[0m
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_blockNumber[0m
+[32meth_getBlockByNumber[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_getStorageAt[0m
+[32meth_getStorageAt (2)[0m
+[32meth_getTransactionCount[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_sendRawTransaction[0m
+  Contract call:       MockERC20#approve
+  Transaction:         0xf5c7d80370ede03d7c4699a6ef5772a346c1a3fb7efab34a14c32b055762d356
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+  Value:               0 ETH
+  Gas used:            46407 of 46407
+  Block #13:           0x0e9a5cacdd83722996c7c23f091ede6fe4d657119ce66fc746118d3fa9f99844
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_getTransactionReceipt[0m
+[32meth_blockNumber[0m
+[32meth_estimateGas[0m
+[32meth_getCode[0m
+[32meth_getCode (2)[0m
+[32meth_gasPrice[0m
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_blockNumber[0m
+[32meth_getBlockByNumber[0m
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_getStorageAt[0m
+[32meth_getStorageAt (2)[0m
+[32meth_getTransactionCount[0m
+[32meth_blockNumber[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_sendRawTransaction[0m
+  Contract call:       LendingPool#deposit
+  Transaction:         0xc20d4c6700b2de7c3a889ed12d9455a84e59b99ad981fd25613018a25859ff49
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+  Gas used:            140314 of 145795
+  Block #14:           0xd1b311f4f0e5c22df8bfab4589209a36d34720578b4f92cad40b30b2c4d79c5c
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_getTransactionReceipt[0m
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_blockNumber[0m
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#allowance
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_blockNumber[0m
+[32meth_estimateGas[0m
+[32meth_getCode[0m
+[32meth_getCode (2)[0m
+[32meth_gasPrice[0m
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_blockNumber[0m
+[32meth_getBlockByNumber[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_getStorageAt[0m
+[32meth_getStorageAt (2)[0m
+[32meth_getTransactionCount[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_sendRawTransaction[0m
+  Contract call:       MockERC20#approve
+  Transaction:         0xae9f5d83a20778331d3a1e44955ea6c1dfca301455d598ae20041036ee109f07
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+  Value:               0 ETH
+  Gas used:            46383 of 46383
+  Block #15:           0xf09a803879044950331e7c5a9358655c4cf0b8b2efeec8e38c78852f35c8cda9
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[32meth_getTransactionReceipt[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[32meth_blockNumber[0m
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[31meth_estimateGas[0m
+  Contract call:       LendingPool#borrow
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+
+  Error: VM Exception while processing transaction: reverted with an unrecognized custom error (return data: 0xe450d38c000000000000000000000000ca5b3038a012294065c729f61e4c1618dbadf6bd00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056bc75e2d63100000)
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[32meth_estimateGas[0m
+[32meth_getCode[0m
+[32meth_getCode (2)[0m
+[32meth_gasPrice[0m
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[32meth_getBlockByNumber[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_getStorageAt[0m
+[32meth_getStorageAt (2)[0m
+[32meth_getTransactionCount[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       LendingPool#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+
+  Error: Transaction reverted without a reason
+
+[32meth_sendRawTransaction[0m
+  Contract call:       MockERC20#approve
+  Transaction:         0x444d7f26dbc373a27224a4c42b480616bd8f85226815308f84b74157dbaa365b
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+  Value:               0 ETH
+  Gas used:            29583 of 29583
+  Block #16:           0x93ecae0855dc1d45a31af45d9640e5588aabdad28f2716f367502bc7e969ee84
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_getTransactionReceipt[0m
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_blockNumber[0m
+[31meth_estimateGas[0m
+  Contract call:       LendingPool#repay
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+
+  Error: reverted with reason string 'Loan not active'
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[31meth_call[0m
+  Contract call:       MockERC20#<unrecognized-selector>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+  Error: Transaction reverted without a reason
+
+[32meth_call[0m
+  Contract call:       MockERC20#symbol
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[31meth_estimateGas[0m
+  Contract call:       LendingPool#flashLoan
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0x5fc8d32690cc91d4c39d9d3abcbd16989f875707
+  Value:               0 ETH
+
+  Error: VM Exception while processing transaction: reverted with an unrecognized custom error (return data: 0xfb8f41b2000000000000000000000000a513e6e4b8f2a923d98304ec87f64353c4d5c8530000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001ff973cafa8000)
+
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_chainId (3)[0m
+[32meth_accounts[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[31meth_sendTransaction[0m
+
+  Sender doesn't have enough funds to send tx. The max upfront cost is: 50000000023882338439059 and the sender's balance is: 8999996801102508450929.
+
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[31meth_sendTransaction[0m
+
+  Sender doesn't have enough funds to send tx. The max upfront cost is: 50000000023882338439059 and the sender's balance is: 8999996801102508450929.
+
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_chainId (3)[0m
+[32meth_accounts[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[31meth_sendTransaction[0m
+
+  Sender doesn't have enough funds to send tx. The max upfront cost is: 9000000023882338439059 and the sender's balance is: 8999996801102508450929.
+
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_chainId (3)[0m
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_getBalance[0m
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Transaction:         0x4fa8f433ab7d4f8f357126d7d497546648580affbc73e0ce39c523cf84bbf16a
+  From:                0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  Value:               9999. ETH
+  Gas used:            21000 of 21001
+  Block #17:           0x9e35bba819781f4fa199d96513af58e1333db3b1f6f81b090f3a0615df9ed577
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Transaction:         0xcdad581ec6b551402e0d5cffe5bef31d5c0965eb3a1f4615a17a3a95caca17de
+  From:                0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  Value:               9999. ETH
+  Gas used:            21000 of 21001
+  Block #18:           0xaeae1dc87f9d5d0a04715464b1c964168d15f2e920a635fcb4eb495059d4e763
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Transaction:         0x5c91e05ab54963a5363875a59fad2623bea981866625c3a4fa036e1c0c574b52
+  From:                0x90f79bf6eb2c4f870365e785982e1f101e93b906
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  Value:               9999. ETH
+  Gas used:            21000 of 21001
+  Block #19:           0x1eacdc258f3e0c74132304c2315ef917a14b64cf88ff8037ace4dd56be8b86be
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Transaction:         0x4fc097cf5fa4931cc18e7e40e2da907a8c100c8ca0059fc10583ee6385189e88
+  From:                0x15d34aaf54267db7d7c367839aaf71a00a2c6a65
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  Value:               9999. ETH
+  Gas used:            21000 of 21001
+  Block #20:           0x4f56d805ad105b601cb5863b73e0e61cffff95f3ac8fa6e2352321c83ae60e05
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Transaction:         0x657f5d68f402625462a5cedb52770387724d6ca5b023f3625e928e43949aebe0
+  From:                0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc
+  To:                  0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  Value:               9999. ETH
+  Gas used:            21000 of 21001
+  Block #21:           0x934e7c365b80e91ef933fe6e3198b6cd538b1c87a85bee194b89e46bcaf1c1e8
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_getBalance[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_chainId (3)[0m
+[32meth_accounts[0m
+[32meth_accounts (2)[0m
+[32meth_chainId[0m
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_blockNumber[0m
+[32meth_chainId[0m
+[32meth_chainId (2)[0m
+[32meth_estimateGas[0m
+[32meth_getBlockByNumber[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       MockERC20#mint
+  Transaction:         0x8dc6627e960163ddbe5201a9b9212087ae59b058c8e92310463c431566f7f1c2
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+  Value:               0 ETH
+  Gas used:            34356 of 34356
+  Block #22:           0xfbb0145484688475ee0f903b4a88440fa7e803c36448ea94b1b442769a57c3b6
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
+
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0
+
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       MockERC20#mint
+  Transaction:         0x6c092049e2e30644db29223561e2ee94a03aa964e05ca8173e5ad2026e77d507
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0
+  Value:               0 ETH
+  Gas used:            68508 of 68508
+  Block #23:           0x316343488e062ec673031f2945682051a14ffa7ebe6ffd569ff4abac9aeaec5b
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0
+
+[32meth_accounts[0m
+[32meth_chainId[0m
+[32meth_call[0m
+  Contract call:       MockERC20#decimals
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_chainId[0m
+[32meth_estimateGas[0m
+[32meth_feeHistory[0m
+[32meth_sendTransaction[0m
+  Contract call:       MockERC20#mint
+  Transaction:         0xfd86306d391ab1adfce51cd564963a7a29eeff2af9357d672388e54566478253
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+  Value:               0 ETH
+  Gas used:            68556 of 68556
+  Block #24:           0x694a8bf6444ccade412922efaa3f330356cfafd322be2700508ae653852c6517
+
+[32meth_chainId[0m
+[32meth_getTransactionByHash[0m
+[32meth_chainId[0m
+[32meth_getTransactionReceipt[0m
+[32meth_chainId[0m
+[32meth_call[0m
+  Contract call:       MockERC20#balanceOf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9
+
+[32meth_blockNumber[0m
+[32meth_getBalance[0m
+[32meth_call[0m
+  WARNING: Calling an account which is not a contract
+  From:                0xca5b3038a012294065c729f61e4c1618dbadf6bd
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
 
